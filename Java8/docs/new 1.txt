@@ -1,0 +1,57 @@
+Java 7 New Features
+Enhancements in Java SE 7
+•	Binary Literals - In Java SE 7, the integral types (byte, short, int, and long) can also be expressed using the binary number system. To specify a binary literal, add the prefix 0b or 0B to the number.
+•	Underscores in Numeric Literals - Any number of underscore characters (_) can appear anywhere between digits in a numerical literal. This feature enables you, for example, to separate groups of digits in numeric literals, which can improve the readability of your code.
+•	Strings in switch Statements - You can use the String class in the expression of a switch statement.
+•	Type Inference for Generic Instance Creation - You can replace the type arguments required to invoke the constructor of a generic class with an empty set of type parameters (<>) as long as the compiler can infer the type arguments from the context. This pair of angle brackets is informally called the diamond.
+•	Improved Compiler Warnings and Errors When Using Non-Reifiable Formal Parameters with Varargs Methods - The Java SE 7 complier generates a warning at the declaration site of a varargs method or constructor with a non-reifiable varargs formal parameter. Java SE 7 introduces the compiler option -Xlint:varargs and the annotations @SafeVarargs and @SuppressWarnings({"unchecked", "varargs"}) to supress these warnings.
+•	The try-with-resources Statement - The try-with-resources statement is a try statement that declares one or more resources. A resource is an object that must be closed after the program is finished with it. The try-with-resources statement ensures that each resource is closed at the end of the statement. Any object that implements the new java.lang.AutoCloseable interface or the java.io.Closeable interface can be used as a resource. The classes java.io.InputStream, OutputStream, Reader, Writer, java.sql.Connection, Statement, and ResultSet have been retrofitted to implement the AutoCloseable interface and can all be used as resources in a try-with-resources statement.
+•	Catching Multiple Exception Types and Rethrowing Exceptions with Improved Type Checking - A single catch block can handle more than one type of exception. In addition, the compiler performs more precise analysis of rethrown exceptions than earlier releases of Java SE. This enables you to specify more specific exception types in the throws clause of a method declaration.
+Java 8 Exam Topics
+TOPICS
+Language Enhancements
+•	Develop code that uses String objects in the switch statement, binary literals, and numeric literals, including underscores in literals
+•	Develop code that uses try-with-resources statements, including using classes that implement the AutoCloseable interface
+•	Develop code that handles multiple Exception types in a single catch block
+•	Use static and default methods of an interface including inheritance rules for a default method
+Concurrency
+•	Use classes from the java.util.concurrent package including CyclicBarrier and CopyOnWriteArrayList with a focus on the advantages over and differences from the traditional java.util collections 
+•	Use Lock, ReadWriteLock, and ReentrantLock classes in the java.util.concurrent.locks and java.util.concurrent.atomic packages to support lock-free thread-safe programming on single variables
+•	Use Executor, ExecutorService, Executors, Callable, and Future to execute tasks using thread pools
+•	Use the parallel Fork/Join Framework
+Localization
+•	Describe the advantages of localizing an application and developing code that defines, reads, and sets the locale with a Locale object
+•	Build a resource bundle for a locale and call a resource bundle from an application
+•	Create and manage date- and time-based events by using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration, including a combination of date and time in a single object
+•	Format dates, numbers, and currency values for localization with the NumberFormat and DateFormat classes, including number and date format patterns
+•	Work with dates and times across time zones and manage changes resulting from daylight savings
+Java File I/O (NIO.2)
+•	Operate on file and directory paths by using the Paths class
+•	Check, delete, copy, or move a file or directory by using the Files class 
+•	Recursively access a directory tree by using the DirectoryStream and FileVisitor interfaces
+•	Find a file by using the PathMatcher interface, and use Java SE 8 I/O improvements, including Files.find(), Files.walk(), and lines() methods
+•	Observe the changes in a directory by using the WatchService interface
+Lambda
+•	Define and write functional interfaces and describe the interfaces of the java.util.function package
+•	Describe a lambda expression; refactor the code that uses an anonymous inner class to use a lambda expression; describe type inference and target typing
+•	Develop code that uses the built-in interfaces included in the java.util.function package, such as Function, Consumer, Supplier, UnaryOperator, Predicate, and Optional APIs, including the primitive and binary variations of the interfaces
+•	Develop code that uses a method reference, including refactoring a lambda expression to a method reference
+Java Collections
+•	Develop code that uses diamond with generic declarations
+•	Develop code that iterates a collection, filters a collection, and sorts a collection by using lambda expressions
+•	Search for data by using methods, such as findFirst(), findAny(), anyMatch(), allMatch(), and noneMatch()
+•	Perform calculations on Java Streams by using count, max, min, average, and sum methods and save results to a collection by using the collect method and Collector class, including the averagingDouble, groupingBy, joining, partitioningBy methods
+•	Develop code that uses Java SE 8 collection improvements, including the Collection.removeIf(), List.replaceAll(), Map.computeIfAbsent(), and Map.computeIfPresent() methods
+•	Develop  code that uses the merge(), flatMap(), and map() methods on Java Streams
+Java Streams
+•	Describe the Stream interface and pipelines; create a stream by using the Arrays.stream() and  IntStream.range() methods; identify the lambda operations that are lazy
+•	Develop code that uses parallel streams, including decomposition operation and reduction operation in streams
+
+
+Links
+http://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html
+
+http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#target-typing
+
+
+
