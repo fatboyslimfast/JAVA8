@@ -1,11 +1,19 @@
+<style>
+table, th, td {
+	border: 1px solid black;
+}
+</style>
+
+
 <table style="width: 100%; padding: 10px">
 	<tr>
-		<th><h1>Upgrade from Java 6 or lower (1Z0–813)</h1></th>
+		<th colspan="10"><h1>Upgrade from Java 6 or lower (1Z0–813)</h1></th>
 
 	</tr>
 	<tr>
 		<th><h2>Exam Objective</h2></th>
 		<th><h2>Chapter</h2></th>
+		<th><h2>Complete?</h2></th>
 	</tr>
 
 	<tr>
@@ -16,22 +24,26 @@
 			statement, binary literals, and numeric literals, including
 			underscores in literals</td>
 		<td>Appendix C</td>
+		<td>N</td>
 	</tr>
 	<tr>
 		<td>Develop code that uses try-with-resources statements,
 			including using classes that implement the AutoCloseable interface</td>
 		<td>6</td>
+		<td>N</td>
 	</tr>
 
 	<tr>
 		<td>Develop code that handles multiple Exception types in a
 			single catch block</td>
 		<td>6</td>
+		<td>N</td>
 	</tr>
 	<tr>
 		<td>Use static and default methods of an interface including
 			inheritance rules for a default method</td>
 		<td>2</td>
+		<td>N</td>
 	</tr>
 
 
@@ -45,25 +57,29 @@
 			focus on the advantages over and differences from the traditional
 			java.util collections</td>
 		<td>7</td>
+		<td>N</td>
 	</tr>
 	<tr>
 		<td>Use Lock, ReadWriteLock, and ReentrantLock classes in the
 			java.util. concurrent.locks and java.util.concurrent.atomic packages
 			to support lock-free thread-safe programming on single variables</td>
 		<td>Appendix C</td>
+		<td>N</td>
 	</tr>
 
 	<tr>
 		<td>Use Executor, ExecutorService, Executors, Callable, and
 			Future to execute tasks using thread pools</td>
 		<td>7</td>
+		<td>N</td>
 	</tr>
 	<tr>
 		<td>Use the parallel Fork/Join Framework</td>
 		<td>7</td>
+		<td>N</td>
 	</tr>
 
-	</tr>
+
 
 
 
@@ -71,6 +87,42 @@
 		<td><h3>Localization</h3></td>
 	</tr>
 
+	<tr>
+		<td>Describe the advantages of localizing an application and
+			developing code that defines, reads, and sets the locale with a
+			Locale object</td>
+		<td>5</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Build a resource bundle for a locale and call a resource
+			bundle from an application</td>
+		<td>5</td>
+		<td>N</td>
+	</tr>
+
+	<tr>
+		<td>Create and manage date- and time-based events by using
+			LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration,
+			including a combination of date and time in a single object</td>
+		<td>5</td>
+		<td>N</td>
+	</tr>
+
+	<tr>
+		<td>Format dates, numbers, and currency values for localization
+			with the NumberFormat and DateFormat classes, including number and
+			date format patterns</td>
+		<td>5, Appendix C</td>
+		<td>N</td>
+	</tr>
+
+	<tr>
+		<td>Work with dates and times across time zones and manage
+			changes resulting from daylight savings</td>
+		<td>5</td>
+		<td>N</td>
+	</tr>
 
 
 
@@ -78,6 +130,36 @@
 		<td><h3>Java File I/O (NIO.2)</h3></td>
 	</tr>
 
+	<tr>
+		<td>Operate on file and directory paths by using the Path class</td>
+		<td>9</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Check, delete, copy, or move a file or directory by using the
+			Files class</td>
+		<td>9</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Recursively access a directory tree by using the
+			DirectoryStream and FileVisitor interfaces</td>
+		<td>Appendix C</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Find a file by using the PathMatcher interface, and use Java
+			SE 8 I/O improvements, including Files.find(), Files.walk(), and
+			lines() methods</td>
+		<td>9</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Observe the changes in a directory by using the WatchService
+			interface</td>
+		<td>Appendix C</td>
+		<td>N</td>
+	</tr>
 
 
 
@@ -85,14 +167,95 @@
 		<td><h3>Lamda</h3></td>
 	</tr>
 
+	<tr>
+		<td>Define and write functional interfaces and describe the
+			interfaces of the java.util.function package</td>
+		<td>3,4</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Describe a lambda expression; refactor the code that uses an
+			anonymous inner class to use a lambda expression; describe type
+			inference and target typing</td>
+		<td>3,4</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Develop code that uses the built-in interfaces included in
+			the java.util. function package, such as Function, Consumer,
+			Supplier, UnaryOperator, Predicate, and Optional APIs, including the
+			primitive and binary variations of the interfaces</td>
+		<td>4</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Develop code that uses a method reference, including
+			refactoring a lambda expression to a method reference</td>
+		<td>3</td>
+		<td>N</td>
+	</tr>
 
 
 	<tr>
 		<td><h3>Java Collections</h3></td>
 	</tr>
+	<tr>
+		<td>Develop code that uses diamond with generic declarations</td>
+		<td>Appendix C</td>
+		<td>N</td>
+	</tr>
+
+	<tr>
+		<td>Develop code that iterates a collection, filters a
+			collection, and sorts a collection by using lambda expressions</td>
+		<td>3</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Search for data by using methods, such as findFirst(),
+			findAny(), any- Match(), allMatch(), and noneMatch()</td>
+		<td>4</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Perform calculations on Java Streams by using count, max,
+			min, average, and sum methods and save results to a collection by
+			using the collect method and Collector class, including the
+			averagingDouble, groupingBy, joining, partitioningBy methods</td>
+		<td>4</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Develop code that uses Java SE 8 collection improvements,
+			including the Collection.removeIf(), List.replaceAll(),
+			Map.computeIfAbsent(), and Map.computeIfPresent() methods</td>
+		<td>3</td>
+		<td>N</td>
+	</tr>
+	<tr>
+		<td>Develop code that uses the merge(), flatMap(), and map()
+			methods on Java Streams</td>
+		<td>4</td>
+		<td>N</td>
+	</tr>
 
 	<tr>
 		<td><h3>Java Streams</h3></td>
+	</tr>
+
+	<tr>
+		<td>Describe the Stream interface and pipelines; create a stream
+			by using the Arrays.stream() and IntStream.range() methods; identify
+			the lambda operations that are lazy</td>
+		<td>4</td>
+		<td>N</td>
+	</tr>
+
+	<tr>
+		<td>Develop code that uses parallel streams, including
+			decomposition operation and reduction operation in streams</td>
+		<td>7</td>
+		<td>N</td>
 	</tr>
 
 </table>
