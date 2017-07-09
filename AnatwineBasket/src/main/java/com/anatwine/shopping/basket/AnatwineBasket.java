@@ -77,7 +77,8 @@ public class AnatwineBasket {
 				addProductToBasket(product);
 			} catch (IllegalArgumentException ex) {
 				MessageFormat mf = new MessageFormat(Constants.ERROR_ADDING_TO_BASKET_MSG);
-				System.err.println(mf.format(new Object[] { product }));
+				System.err.println(
+						mf.format(new Object[] { product, java.util.Arrays.asList(ProductCatalogue.values()) }));
 				throw ex;
 			}
 		}
