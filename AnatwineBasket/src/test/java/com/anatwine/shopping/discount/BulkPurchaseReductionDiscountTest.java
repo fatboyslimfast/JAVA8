@@ -130,4 +130,27 @@ public class BulkPurchaseReductionDiscountTest {
 		assertEquals(Utils.formatAmount(new BigDecimal("14.25")), Utils.formatAmount(saving));
 	}
 
+	@Test
+	public void testReturnFreeTieWithEveryShirt_FutureDiscountScenario() {
+		// given
+
+		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
+		Map<Product, Integer> basketProducts = new HashMap<>();
+		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(1));
+		basketProducts.put(new Product(TIE, destinationProduct), new Integer(2));
+		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
+
+		qualifyingQuantity = 1;
+		percentageOff = 1.0D;
+
+		bulkPurchaseReductionDiscount = spy(
+				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
+
+		// when
+		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+
+		// then
+		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(saving));
+	}
+
 }
