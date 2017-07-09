@@ -4,9 +4,11 @@
 package com.anatwine.shopping.basket;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
@@ -34,8 +36,30 @@ public class AnatwineBasket {
 	 *            Array of Product Names
 	 */
 	public static void main(String[] products) {
+
+		String[] enteredProducts = getInput();
+
 		AnatwineBasket basket = new AnatwineBasket();
-		basket.processProducts(products);
+		basket.processProducts(enteredProducts);
+	}
+
+	/**
+	 * Return user input as String array
+	 * 
+	 * @return String array
+	 */
+	private static String[] getInput() {
+		System.out.print("AnatwineBasket ");
+		Scanner stdin = new Scanner(System.in);
+		String text = stdin.nextLine();
+		stdin.close();
+
+		if (text == null || text.trim().equals("")) {
+			System.err.println(Constants.NO_ITEMS_ENTERED_MSG);
+			throw new IllegalArgumentException(Constants.NO_ITEMS_ENTERED_MSG);
+		}
+
+		return text.split(" ");
 	}
 
 	/**
@@ -52,7 +76,8 @@ public class AnatwineBasket {
 			try {
 				addProductToBasket(product);
 			} catch (IllegalArgumentException ex) {
-				System.err.println(Constants.ERROR_ADDING_TO_BASKET_MSG + " " + ex.getMessage());
+				MessageFormat mf = new MessageFormat(Constants.ERROR_ADDING_TO_BASKET_MSG);
+				System.err.println(mf.format(new Object[] { product }));
 				throw ex;
 			}
 		}
