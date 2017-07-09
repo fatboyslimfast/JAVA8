@@ -1,10 +1,12 @@
 /**
  * 
  */
-package com.anatwine.shopping.product;
+package com.anatwine.shopping.basket;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
  * 
@@ -61,7 +63,7 @@ public class Product {
 	 * @param name
 	 *            Product name
 	 * @param productCatalogue
-	 *            {@linkProductCatalogue}
+	 *            {@link ProductCatalogue}
 	 */
 	public Product(String name, ProductCatalogue productCatalogue) {
 		this.name = name;

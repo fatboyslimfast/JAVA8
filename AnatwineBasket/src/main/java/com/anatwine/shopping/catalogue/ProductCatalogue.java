@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.anatwine.shopping.product;
+package com.anatwine.shopping.catalogue;
 
 import java.math.BigDecimal;
 

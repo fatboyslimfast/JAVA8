@@ -14,8 +14,8 @@ import org.junit.Test;
 
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.AnatwineBasket;
-import com.anatwine.shopping.product.Product;
-import com.anatwine.shopping.product.ProductCatalogue;
+import com.anatwine.shopping.basket.Product;
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
  * @author Pete
@@ -37,7 +37,7 @@ public class BulkPurchaseReductionDiscountTest {
 		// class we are testing
 		sourceProduct = ProductCatalogue.Shirt;
 		destinationProduct = ProductCatalogue.Tie;
-		qualifyingQuantity = new Integer(2);
+		qualifyingQuantity = 2;
 		percentageOff = 0.5D;
 
 		bulkPurchaseReductionDiscount = spy(
@@ -46,7 +46,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnNoDiscountWhenTwoShirtsPurchased() {
+	public void testReturnNoDiscountWhenTwoTiesPurchased() {
 		// given
 
 		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);

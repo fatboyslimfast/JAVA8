@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.basket.AnatwineBasket;
-import com.anatwine.shopping.product.Product;
-import com.anatwine.shopping.product.ProductCatalogue;
+import com.anatwine.shopping.basket.Product;
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
  * @author Pete
@@ -103,6 +103,37 @@ public abstract class Discount {
 	 */
 	protected void setQualifyingQuantity(Integer qualifyingQuantity) {
 		this.qualifyingQuantity = qualifyingQuantity;
+	}
+
+	/**
+	 * Validate Percentage Off value is not null and between 0 and 1.
+	 * 
+	 * @param percentageOff
+	 *            percentage off
+	 * @return percentageOff if valid
+	 */
+	protected Double isValidPercentageOff(Double percentageOff) {
+		if (percentageOff == null || percentageOff <= 0 || percentageOff > 1) {
+			System.err.println("Invalid Percentage Off value specified");
+			throw new IllegalArgumentException("Invalid Percentage Off value specified.");
+		}
+		return percentageOff;
+	}
+
+	/**
+	 * Validate Qualifying Quantity is greater than zero.
+	 * 
+	 * @param qualifyingQuantity
+	 *            Qualifying Quantity to validate
+	 * @return
+	 */
+	protected int isValidQualifyingQuantity(int qualifyingQuantity) {
+		if (qualifyingQuantity <= 0) {
+			System.err.println("Invalid Qualifying Quantity value specified");
+			throw new IllegalArgumentException("Invalid Qualifying Quantity value specified.");
+		}
+
+		return qualifyingQuantity;
 	}
 
 }

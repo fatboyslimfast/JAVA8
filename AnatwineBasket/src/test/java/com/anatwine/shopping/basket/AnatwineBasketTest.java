@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.anatwine.shopping.Utils;
-import com.anatwine.shopping.product.Product;
 
 /**
  * @author Pete

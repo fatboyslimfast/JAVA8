@@ -17,8 +17,8 @@ import org.junit.Test;
 
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.AnatwineBasket;
-import com.anatwine.shopping.product.Product;
-import com.anatwine.shopping.product.ProductCatalogue;
+import com.anatwine.shopping.basket.Product;
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
  * @author Pete
@@ -42,7 +42,7 @@ public class PriceReductionDiscountTest {
 		// class we are testing
 		sourceProduct = ProductCatalogue.Trousers;
 		destinationProduct = ProductCatalogue.Trousers;
-		qualifyingQuantity = new Integer(1);
+		qualifyingQuantity = 1;
 		percentageOff = 0.1D;
 
 		priceReductionDiscount = spy(
@@ -144,6 +144,40 @@ public class PriceReductionDiscountTest {
 
 		// then
 		assertEquals(Utils.formatAmount(new BigDecimal("355.00")), Utils.formatAmount(saving));
+	}
+
+	@Test
+	public void testBuyOneGetOneFree_FutureDiscountScenario() {
+		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
+		Map<Product, Integer> basketProducts = new HashMap<>();
+		basketProducts.put(new Product(TROUSERS, ProductCatalogue.Trousers), new Integer(2));
+		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
+
+		priceReductionDiscount = spy(new GenericReductionDiscount(sourceProduct, destinationProduct, 2, 1D));
+
+		// when
+		BigDecimal saving = priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+
+		// then
+		assertEquals(Utils.formatAmount(new BigDecimal("35.50")), Utils.formatAmount(saving));
+
+	}
+
+	@Test
+	public void testBuyTwoGetTwoFree_FutureDiscountScenario() {
+		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
+		Map<Product, Integer> basketProducts = new HashMap<>();
+		basketProducts.put(new Product(TROUSERS, ProductCatalogue.Trousers), new Integer(4));
+		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
+
+		priceReductionDiscount = spy(new GenericReductionDiscount(sourceProduct, destinationProduct, 2, 1D));
+
+		// when
+		BigDecimal saving = priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+
+		// then
+		assertEquals(Utils.formatAmount(new BigDecimal("71.00")), Utils.formatAmount(saving));
+
 	}
 
 }

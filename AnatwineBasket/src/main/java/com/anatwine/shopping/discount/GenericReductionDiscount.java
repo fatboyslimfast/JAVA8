@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.AnatwineBasket;
-import com.anatwine.shopping.product.Product;
-import com.anatwine.shopping.product.ProductCatalogue;
+import com.anatwine.shopping.basket.Product;
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
  * 
@@ -39,11 +39,11 @@ public class GenericReductionDiscount extends Discount {
 	 *            0.5 = 50%
 	 */
 	public GenericReductionDiscount(ProductCatalogue sourceProduct, ProductCatalogue destinationProduct,
-			Integer qualifyingQuantity, Double percentageOff) {
+			int qualifyingQuantity, Double percentageOff) {
 		setSourceProduct(sourceProduct);
 		setDestinationProduct(destinationProduct);
-		setQualifyingQuantity(qualifyingQuantity);
-		setPercentageOff(percentageOff);
+		setQualifyingQuantity(isValidQualifyingQuantity(qualifyingQuantity));
+		setPercentageOff(isValidPercentageOff(percentageOff));
 	}
 
 	@Override

@@ -9,10 +9,9 @@ import java.util.Map;
 
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
+import com.anatwine.shopping.catalogue.ProductCatalogue;
 import com.anatwine.shopping.discount.Discount;
 import com.anatwine.shopping.discount.GenericReductionDiscount;
-import com.anatwine.shopping.product.Product;
-import com.anatwine.shopping.product.ProductCatalogue;
 
 /**
  * 
@@ -82,20 +81,6 @@ public class AnatwineBasket {
 	 * @return Total Discount amount
 	 */
 	private BigDecimal calculateDiscounts() {
-
-		/*
-		 * Discount trousersDiscount = new
-		 * PriceReductionDiscount(ProductCatalogue.Trousers, 0.1D);
-		 * 
-		 * BigDecimal saving = trousersDiscount.applyDiscountRule(this);
-		 * 
-		 * Discount bulkShirtPurchaseDiscount = new
-		 * BulkPurchaseReductionDiscount(ProductCatalogue.Shirt,
-		 * ProductCatalogue.Tie, 2, 0.5D);
-		 * 
-		 * saving =
-		 * saving.add(bulkShirtPurchaseDiscount.applyDiscountRule(this));
-		 */
 
 		Discount trousersDiscount = new GenericReductionDiscount(ProductCatalogue.Trousers, ProductCatalogue.Trousers,
 				1, 0.1D);
