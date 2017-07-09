@@ -23,13 +23,13 @@ public abstract class Discount {
 	Double percentageOff = null;
 
 	/**
-	 * Logic to return and output to the console total discount amount.
+	 * Update the baskets discounts map.
 	 * 
 	 * @param basket
 	 *            the current basket
 	 * @return total discount amount
 	 */
-	public abstract BigDecimal applyDiscountRule(AnatwineBasket basket);
+	public abstract void applyDiscountRule(AnatwineBasket basket);
 
 	/*
 	 * Return the Product Total Cost Price

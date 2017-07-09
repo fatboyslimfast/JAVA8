@@ -6,7 +6,6 @@ package com.anatwine.shopping.discount;
 import java.math.BigDecimal;
 
 import com.anatwine.shopping.Constants;
-import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.AnatwineBasket;
 import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
@@ -47,7 +46,7 @@ public class GenericReductionDiscount extends Discount {
 	}
 
 	@Override
-	public BigDecimal applyDiscountRule(AnatwineBasket basket) {
+	public void applyDiscountRule(AnatwineBasket basket) {
 
 		BigDecimal saving = BigDecimal.ZERO;
 
@@ -76,11 +75,9 @@ public class GenericReductionDiscount extends Discount {
 
 		// any savings?
 		if (saving.compareTo(BigDecimal.ZERO) > 0) {
-			System.out.println(getDestinationProduct().toString().concat(" ").concat(getPercentageOffString())
-					.concat(Constants.OFF_MESSAGE).concat(Utils.formatAmount(saving.negate())));
+			basket.getDiscounts().put(getDestinationProduct().toString().concat(" ").concat(getPercentageOffString())
+					.concat(Constants.OFF_MESSAGE), saving.negate());
 		}
-
-		return saving;
 	}
 
 }

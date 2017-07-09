@@ -1,7 +1,8 @@
 package com.anatwine.shopping.basket;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
 
 import java.math.BigDecimal;
@@ -42,9 +43,10 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertFalse(basket.isValid());
 		assertEquals(0, basket.getBasketProducts().size());
-		assertNull(basket.getDiscountTotal());
-		assertNull(basket.getSubTotal());
+		assertEquals(BigDecimal.ZERO, basket.getDiscountTotal());
+		assertEquals(BigDecimal.ZERO, basket.getSubTotal());
 
 	}
 
@@ -66,6 +68,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(1, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -74,7 +77,7 @@ public class AnatwineBasketTest {
 			}
 		}
 
-		assertEquals(Utils.formatAmount(new BigDecimal("3.55")), Utils.formatAmount(basket.getDiscountTotal()));
+		assertEquals(Utils.formatAmount(new BigDecimal("-3.55")), Utils.formatAmount(basket.getDiscountTotal()));
 		assertEquals(Utils.formatAmount(new BigDecimal("35.50")), Utils.formatAmount(basket.getSubTotal()));
 
 	}
@@ -100,6 +103,7 @@ public class AnatwineBasketTest {
 		}
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(4, basket.getBasketProducts().size());
 
 	}
@@ -113,6 +117,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(4, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -138,6 +143,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(3, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -164,6 +170,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -174,7 +181,7 @@ public class AnatwineBasketTest {
 			}
 		}
 
-		assertEquals(Utils.formatAmount(new BigDecimal("4.75")), Utils.formatAmount(basket.getDiscountTotal()));
+		assertEquals(Utils.formatAmount(new BigDecimal("-4.75")), Utils.formatAmount(basket.getDiscountTotal()));
 		assertEquals(Utils.formatAmount(new BigDecimal("59.50")), Utils.formatAmount(basket.getSubTotal()));
 
 	}
@@ -188,6 +195,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -198,7 +206,7 @@ public class AnatwineBasketTest {
 			}
 		}
 
-		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(basket.getDiscountTotal()));
+		assertEquals(Utils.formatAmount(new BigDecimal("-9.50")), Utils.formatAmount(basket.getDiscountTotal()));
 		assertEquals(Utils.formatAmount(new BigDecimal("69.00")), Utils.formatAmount(basket.getSubTotal()));
 
 	}
@@ -212,6 +220,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -222,7 +231,7 @@ public class AnatwineBasketTest {
 			}
 		}
 
-		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(basket.getDiscountTotal()));
+		assertEquals(Utils.formatAmount(new BigDecimal("-9.50")), Utils.formatAmount(basket.getDiscountTotal()));
 		assertEquals(Utils.formatAmount(new BigDecimal("81.50")), Utils.formatAmount(basket.getSubTotal()));
 
 	}
@@ -236,6 +245,7 @@ public class AnatwineBasketTest {
 		basket.processProducts(products);
 
 		// then
+		assertTrue(basket.isValid());
 		assertEquals(3, basket.getBasketProducts().size());
 
 		for (Product key : basket.getBasketProducts().keySet()) {
@@ -248,7 +258,7 @@ public class AnatwineBasketTest {
 			}
 		}
 
-		assertEquals(Utils.formatAmount(new BigDecimal("13.05")), Utils.formatAmount(basket.getDiscountTotal()));
+		assertEquals(Utils.formatAmount(new BigDecimal("-13.05")), Utils.formatAmount(basket.getDiscountTotal()));
 		assertEquals(Utils.formatAmount(new BigDecimal("117.00")), Utils.formatAmount(basket.getSubTotal()));
 
 	}

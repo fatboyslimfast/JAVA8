@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -12,7 +15,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.AnatwineBasket;
 import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
@@ -30,6 +32,8 @@ public class BulkPurchaseReductionDiscountTest {
 	private ProductCatalogue destinationProduct;
 	private Integer qualifyingQuantity;
 	private Double percentageOff;
+	private AnatwineBasket mockAnatwineBasket;
+	private HashMap<String, BigDecimal> discounts;
 
 	@Before
 	public void setUp() throws Exception {
@@ -43,23 +47,27 @@ public class BulkPurchaseReductionDiscountTest {
 		bulkPurchaseReductionDiscount = spy(
 				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
 
+		mockAnatwineBasket = mock(AnatwineBasket.class);
+		discounts = new HashMap<>();
+		when(mockAnatwineBasket.getDiscounts()).thenReturn(discounts);
+
 	}
 
 	@Test
 	public void testReturnNoDiscountWhenTwoTiesPurchased() {
 		// given
-
-		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(1));
 		basketProducts.put(new Product(TIE, destinationProduct), new Integer(2));
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("0.00")), Utils.formatAmount(saving));
+
+		verify(mockAnatwineBasket, times(0)).getDiscounts();
+
 	}
 
 	@Test
@@ -73,84 +81,100 @@ public class BulkPurchaseReductionDiscountTest {
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("4.750")), Utils.formatAmount(saving));
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key);
+			assertEquals(new BigDecimal("-4.750"), discounts.get(key));
+		}
+
 	}
 
 	@Test
 	public void testReturnTiesDiscountWhenFourShirtsPurchased() {
 		// given
 
-		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(4));
 		basketProducts.put(new Product(TIE, destinationProduct), new Integer(2));
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(saving));
+
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key);
+			assertEquals(new BigDecimal("-9.500"), discounts.get(key));
+		}
 	}
 
 	@Test
 	public void testReturnTiesDiscountWhenFiveShirtsPurchased() {
 		// given
 
-		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(5));
 		basketProducts.put(new Product(TIE, destinationProduct), new Integer(2));
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(saving));
+
+		mockAnatwineBasket.getDiscounts();
+
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key);
+			assertEquals(new BigDecimal("-9.500"), discounts.get(key));
+		}
 	}
 
 	@Test
 	public void testReturnTiesDiscountWhenSixShirtsPurchased() {
 		// given
 
-		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(6));
 		basketProducts.put(new Product(TIE, destinationProduct), new Integer(3));
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("14.25")), Utils.formatAmount(saving));
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key);
+			assertEquals(new BigDecimal("-14.250"), discounts.get(key));
+		}
 	}
 
 	@Test
 	public void testReturnFreeTieWithEveryShirt_FutureDiscountScenario() {
 		// given
 
-		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(1));
 		basketProducts.put(new Product(TIE, destinationProduct), new Integer(2));
 		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
 
 		qualifyingQuantity = 1;
-		percentageOff = 1.0D;
+		percentageOff = 1.0D; // 100%
 
 		bulkPurchaseReductionDiscount = spy(
 				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
 
 		// when
-		BigDecimal saving = bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		assertEquals(Utils.formatAmount(new BigDecimal("9.50")), Utils.formatAmount(saving));
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 100.0% Off ", key);
+			assertEquals(new BigDecimal("-9.50"), discounts.get(key));
+		}
 	}
 
 }

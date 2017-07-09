@@ -5,6 +5,7 @@ package com.anatwine.shopping.basket;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.anatwine.shopping.Constants;
@@ -24,9 +25,9 @@ public class AnatwineBasket {
 	// Product and Quantity
 	private Map<Product, Integer> basketProducts = new HashMap<>();
 	// Total Basket Cost
-	private BigDecimal subTotal;
-	// Total Discounted Amount
-	private BigDecimal discountTotal;
+	private BigDecimal subTotal = BigDecimal.ZERO;
+
+	private Map<String, BigDecimal> discounts = new LinkedHashMap<>();
 
 	/**
 	 * @param products
@@ -57,47 +58,50 @@ public class AnatwineBasket {
 		}
 
 		computeTotals();
+
+		System.out.println(printReceipt());
 	}
 
 	/**
 	 * Compute and output to the console the sub-total, total of any discounts
 	 * to be applied and a final total.
 	 */
-	public void computeTotals() {
-		if (getBasketProducts().size() > 0) {
-			subTotal = calculateSubTotal();
-			discountTotal = calculateDiscounts();
-			System.out.println(Constants.TOTAL_MSG + Utils.formatAmount(subTotal.subtract(discountTotal)));
-			System.out.println("==========================================");
+	protected void computeTotals() {
+		if (isValid()) {
+			calculateSubTotal();
+			calculateDiscounts();
 		}
-
 	}
 
 	/**
 	 * 
-	 * Instantiate and apply {@link Discount} rules. If none are applied '0' is
-	 * returned.
+	 * Instantiate and apply {@link Discount} rules.
 	 * 
-	 * @return Total Discount amount
+	 * 
 	 */
-	private BigDecimal calculateDiscounts() {
+	private void calculateDiscounts() {
 
 		Discount trousersDiscount = new GenericReductionDiscount(ProductCatalogue.Trousers, ProductCatalogue.Trousers,
 				1, 0.1D);
 
-		BigDecimal saving = trousersDiscount.applyDiscountRule(this);
+		applyDiscountStrategy(trousersDiscount);
 
 		Discount bulkShirtPurchaseDiscount = new GenericReductionDiscount(ProductCatalogue.Shirt, ProductCatalogue.Tie,
 				2, 0.5D);
 
-		saving = saving.add(bulkShirtPurchaseDiscount.applyDiscountRule(this));
+		applyDiscountStrategy(bulkShirtPurchaseDiscount);
 
-		if (saving.compareTo(BigDecimal.ZERO) != 0) {
-			return saving;
-		}
+	}
 
-		System.out.println(Constants.NO_OFFERS_AVAILABLE_MSG);
-		return BigDecimal.ZERO;
+	/**
+	 * Calls the apply discount rule of passed {@link Discount}
+	 * 
+	 * @param discount
+	 *            discount strategy
+	 */
+	private void applyDiscountStrategy(Discount discount) {
+
+		discount.applyDiscountRule(this);
 
 	}
 
@@ -126,9 +130,9 @@ public class AnatwineBasket {
 	 * 
 	 * @return sub total amount of all products in the basket.
 	 */
-	private BigDecimal calculateSubTotal() {
+	private void calculateSubTotal() {
 
-		if (getBasketProducts().size() > 0) {
+		if (isValid()) {
 
 			BigDecimal amount = BigDecimal.ZERO;
 
@@ -136,12 +140,8 @@ public class AnatwineBasket {
 				amount = amount.add(getProductTotal(key));
 			}
 
-			System.out.println(Constants.SUB_TOTAL_MSG + Utils.formatAmount(amount));
+			setSubTotal(amount);
 
-			return amount;
-
-		} else {
-			return null;
 		}
 
 	}
@@ -167,6 +167,16 @@ public class AnatwineBasket {
 	}
 
 	/**
+	 * Set basket sub total.
+	 * 
+	 * @param subTotal
+	 *            amount
+	 */
+	private void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	/**
 	 * @return the sub total.
 	 */
 	protected BigDecimal getSubTotal() {
@@ -177,7 +187,14 @@ public class AnatwineBasket {
 	 * @return the discount total.
 	 */
 	public BigDecimal getDiscountTotal() {
-		return discountTotal;
+
+		BigDecimal sum = BigDecimal.ZERO;
+		for (String key : getDiscounts().keySet()) {
+			sum = sum.add(getDiscounts().get(key));
+
+		}
+
+		return sum;
 	}
 
 	/**
@@ -188,6 +205,61 @@ public class AnatwineBasket {
 	 */
 	public Map<Product, Integer> getBasketProducts() {
 		return basketProducts;
+	}
+
+	/**
+	 * Map of calculated discount text and amounts.
+	 * 
+	 * @return Discount Map
+	 */
+	public Map<String, BigDecimal> getDiscounts() {
+		return discounts;
+	}
+
+	/**
+	 * 
+	 * Set Discount Map.
+	 * 
+	 * @param discounts
+	 *            map of discounts
+	 */
+	public void setDiscounts(Map<String, BigDecimal> discounts) {
+		this.discounts = discounts;
+	}
+
+	/**
+	 * Checks if basket contains products;
+	 * 
+	 * @return true if basket products found; false otherwise.
+	 */
+	public boolean isValid() {
+		return !getBasketProducts().isEmpty();
+	}
+
+	/**
+	 * Print Receipt. Sub-total, any Discounts and Grand Total.
+	 * 
+	 * @return String receipt
+	 */
+	public String printReceipt() {
+
+		StringBuffer basket = new StringBuffer(Constants.SUB_TOTAL_MSG).append(Utils.formatAmount(getSubTotal()));
+		basket.append("\n");
+		if (getDiscounts().size() > 0) {
+			for (String key : getDiscounts().keySet()) {
+				basket.append(key + ": " + Utils.formatAmount(getDiscounts().get(key)));
+				basket.append("\n");
+			}
+		} else {
+			basket.append(Constants.NO_OFFERS_AVAILABLE_MSG);
+			basket.append("\n");
+		}
+
+		basket.append(Constants.TOTAL_MSG).append(Utils.formatAmount(getSubTotal().add(getDiscountTotal())));
+		basket.append("\n");
+		basket.append("===================================================================================");
+
+		return basket.toString();
 	}
 
 }
