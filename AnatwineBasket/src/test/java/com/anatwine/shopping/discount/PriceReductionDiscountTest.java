@@ -30,8 +30,10 @@ public class PriceReductionDiscountTest {
 	private static final String JACKET = "Jacket";
 	private static final String TIE = "Tie";
 	private static final String SHIRTS = "Shirts";
-	private PriceReductionDiscount priceReductionDiscount;
+	private GenericReductionDiscount priceReductionDiscount;
 	private ProductCatalogue sourceProduct;
+	private ProductCatalogue destinationProduct;
+	private Integer qualifyingQuantity;
 	private Double percentageOff;
 
 	@Before
@@ -39,9 +41,12 @@ public class PriceReductionDiscountTest {
 
 		// class we are testing
 		sourceProduct = ProductCatalogue.Trousers;
+		destinationProduct = ProductCatalogue.Trousers;
+		qualifyingQuantity = new Integer(1);
 		percentageOff = 0.1D;
 
-		priceReductionDiscount = spy(new PriceReductionDiscount(sourceProduct, percentageOff));
+		priceReductionDiscount = spy(
+				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
 
 	}
 

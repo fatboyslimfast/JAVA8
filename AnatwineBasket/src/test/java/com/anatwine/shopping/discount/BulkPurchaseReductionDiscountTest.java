@@ -25,7 +25,7 @@ public class BulkPurchaseReductionDiscountTest {
 
 	private static final String TIE = "Tie";
 	private static final String SHIRT = "Shirt";
-	private BulkPurchaseReductionDiscount bulkPurchaseReductionDiscount;
+	private GenericReductionDiscount bulkPurchaseReductionDiscount;
 	private ProductCatalogue sourceProduct;
 	private ProductCatalogue destinationProduct;
 	private Integer qualifyingQuantity;
@@ -40,8 +40,8 @@ public class BulkPurchaseReductionDiscountTest {
 		qualifyingQuantity = new Integer(2);
 		percentageOff = 0.5D;
 
-		bulkPurchaseReductionDiscount = spy(new BulkPurchaseReductionDiscount(sourceProduct, destinationProduct,
-				qualifyingQuantity, percentageOff));
+		bulkPurchaseReductionDiscount = spy(
+				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
 
 	}
 
