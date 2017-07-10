@@ -58,7 +58,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnNoDiscountWhenTwoShirtsPurchased() {
+	public void shouldReturnNoDiscountWhenTwoShirtsPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -78,7 +78,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTrouserDiscountWhenOneTrousersPurchased() {
+	public void shouldReturnTrouserDiscountWhenOneTrousersPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -99,7 +99,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTrouserDiscountWhenTwoTrousersPurchased() {
+	public void shouldReturnTrouserDiscountWhenTwoTrousersPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -120,7 +120,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTrouserDiscountWhenThreeTrousersPurchased() {
+	public void shouldReturnTrouserDiscountWhenThreeTrousersPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -142,7 +142,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTrouserDiscountWhenOneHundredTrousersPurchased() {
+	public void shouldReturnTrouserDiscountWhenOneHundredTrousersPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -164,7 +164,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testBuyOneGetOneFree_FutureDiscountScenario() {
+	public void shouldBuyOneGetOneFree_FutureDiscountScenario() {
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(TROUSERS, ProductCatalogue.Trousers), new Integer(2));
@@ -184,7 +184,7 @@ public class PriceReductionDiscountTest {
 	}
 
 	@Test
-	public void testBuyTwoGetTwoFree_FutureDiscountScenario() {
+	public void shouldBuyTwoGetTwoFree_FutureDiscountScenario() {
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(TROUSERS, ProductCatalogue.Trousers), new Integer(4));

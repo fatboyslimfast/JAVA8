@@ -54,7 +54,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnNoDiscountWhenTwoTiesPurchased() {
+	public void shouldReturnNoDiscountWhenTwoTiesPurchased() {
 		// given
 		Map<Product, Integer> basketProducts = new HashMap<>();
 		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(1));
@@ -71,7 +71,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTieDiscountWhenTwoShirtsPurchased() {
+	public void shouldReturnTieDiscountWhenTwoShirtsPurchased() {
 		// given
 
 		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
@@ -92,7 +92,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTiesDiscountWhenFourShirtsPurchased() {
+	public void shouldReturnTiesDiscountWhenFourShirtsPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -112,7 +112,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTiesDiscountWhenFiveShirtsPurchased() {
+	public void shouldReturnTiesDiscountWhenFiveShirtsPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -134,7 +134,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnTiesDiscountWhenSixShirtsPurchased() {
+	public void shouldReturnTiesDiscountWhenSixShirtsPurchased() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
@@ -153,7 +153,7 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
-	public void testReturnFreeTieWithEveryShirt_FutureDiscountScenario() {
+	public void shouldReturnFreeTieWithEveryShirt_FutureDiscountScenario() {
 		// given
 
 		Map<Product, Integer> basketProducts = new HashMap<>();
