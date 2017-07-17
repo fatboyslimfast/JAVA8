@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,8 +15,7 @@ import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 import com.anatwine.shopping.discount.Discount;
-import com.anatwine.shopping.discount.GenericReductionDiscount;
-import com.anatwine.shopping.discount.IDiscount;
+import com.anatwine.shopping.discount.DiscountFactory;
 
 /**
  *
@@ -107,28 +107,19 @@ public class AnatwineBasket {
 	 *
 	 */
 	private void calculateDiscounts() {
-
-		IDiscount trousersDiscount = new GenericReductionDiscount(ProductCatalogue.Trousers, ProductCatalogue.Trousers,
-				1, 0.1D);
-
-		applyDiscountStrategy(trousersDiscount);
-
-		IDiscount bulkShirtPurchaseDiscount = new GenericReductionDiscount(ProductCatalogue.Shirt, ProductCatalogue.Tie,
-				2, 0.5D);
-
-		applyDiscountStrategy(bulkShirtPurchaseDiscount);
-
+		applyDiscountStrategy(DiscountFactory.getCurrentDiscounts());
 	}
 
 	/**
 	 * Calls the apply discount rule of passed {@link Discount}
 	 *
-	 * @param discount
+	 * @param discounts
 	 *            discount strategy
 	 */
-	private void applyDiscountStrategy(IDiscount discount) {
-
-		discount.applyDiscountRule(this);
+	private void applyDiscountStrategy(List<Discount> discounts) {
+		for (Discount discount : discounts) {
+			discount.applyDiscountRule(this);
+		}
 
 	}
 

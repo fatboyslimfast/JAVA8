@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package com.anatwine.shopping.discount;
 
@@ -11,22 +11,22 @@ import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 
 /**
- *
+ * 
  * Code that will add a discount to 'Destination' Product based on the minimum
  * number of a 'Source' Products added to the basket's map. e.g. Buy two Shirts
  * get 50% reduction off a tie, source and destination constructor arguments are
  * different products, or Reduce all Trousers by 10% source and destination
  * constructor arguments are the same
- *
+ * 
  * @author Pete
  *
  */
 public class GenericReductionDiscount extends Discount {
 
 	/**
-	 *
+	 * 
 	 * Constructor
-	 *
+	 * 
 	 * @param sourceProduct
 	 *            Source {@link Product}
 	 * @param destinationProduct
@@ -58,8 +58,13 @@ public class GenericReductionDiscount extends Discount {
 			for (Product product : basket.getBasketProducts().keySet()) {
 				if (product.getName().equals(getDestinationProduct().toString())) {
 
-					saving = product.getUnitPrice().multiply(
-							new BigDecimal(getPercentageOff()).multiply(new BigDecimal(destinationProductCount)));
+					if (basket.getBasketProducts().get(product) < destinationProductCount) {
+						saving = product.getUnitPrice().multiply(new BigDecimal(getPercentageOff())
+								.multiply(new BigDecimal(basket.getBasketProducts().get(product))));
+					} else {
+						saving = product.getUnitPrice().multiply(
+								new BigDecimal(getPercentageOff()).multiply(new BigDecimal(destinationProductCount)));
+					}
 
 					break;
 
