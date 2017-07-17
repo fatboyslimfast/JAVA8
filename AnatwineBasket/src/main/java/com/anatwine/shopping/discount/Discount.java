@@ -11,7 +11,7 @@ import com.anatwine.shopping.catalogue.ProductCatalogue;
  * @author Pete
  *
  */
-public abstract class Discount {
+public abstract class Discount implements IDiscount {
 
 	/* Source of discount */
 	ProductCatalogue sourceProduct = null;
@@ -21,15 +21,6 @@ public abstract class Discount {
 	Integer qualifyingQuantity = null;
 	/* Percentage discount applied to Unit Price (between 0.0 & 1.0) */
 	Double percentageOff = null;
-
-	/**
-	 * Update the baskets discounts map.
-	 * 
-	 * @param basket
-	 *            the current basket
-	 * @return total discount amount
-	 */
-	public abstract void applyDiscountRule(AnatwineBasket basket);
 
 	/*
 	 * Return the Product Total Cost Price
@@ -107,7 +98,7 @@ public abstract class Discount {
 
 	/**
 	 * Validate Percentage Off value is not null and between 0 and 1.
-	 * 
+	 *
 	 * @param percentageOff
 	 *            percentage off
 	 * @return percentageOff if valid
@@ -122,7 +113,7 @@ public abstract class Discount {
 
 	/**
 	 * Validate Qualifying Quantity is greater than zero.
-	 * 
+	 *
 	 * @param qualifyingQuantity
 	 *            Qualifying Quantity to validate
 	 * @return

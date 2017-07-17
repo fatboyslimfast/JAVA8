@@ -92,6 +92,27 @@ public class BulkPurchaseReductionDiscountTest {
 	}
 
 	@Test
+	public void shouldReturnTieDiscountWhenTwoShirtsAndFourTiesPurchased() {
+		// given
+
+		AnatwineBasket mockAnatwineBasket = mock(AnatwineBasket.class);
+		Map<Product, Integer> basketProducts = new HashMap<>();
+		basketProducts.put(new Product(SHIRT, sourceProduct), new Integer(2));
+		basketProducts.put(new Product(TIE, destinationProduct), new Integer(4));
+		doReturn(basketProducts).when(mockAnatwineBasket).getBasketProducts();
+
+		// when
+		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
+
+		// then
+		for (String key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key);
+			assertEquals(new BigDecimal("-4.750"), discounts.get(key));
+		}
+
+	}
+
+	@Test
 	public void shouldReturnTiesDiscountWhenFourShirtsPurchased() {
 		// given
 

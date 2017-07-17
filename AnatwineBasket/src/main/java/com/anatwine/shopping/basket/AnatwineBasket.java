@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.anatwine.shopping.basket;
 
@@ -15,10 +15,11 @@ import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 import com.anatwine.shopping.discount.Discount;
 import com.anatwine.shopping.discount.GenericReductionDiscount;
+import com.anatwine.shopping.discount.IDiscount;
 
 /**
- * 
- * 
+ *
+ *
  * @author Pete
  *
  */
@@ -45,7 +46,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Return user input as String array
-	 * 
+	 *
 	 * @return String array
 	 */
 	private static String[] getInput() {
@@ -64,7 +65,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Given an array of String product names, add these to the basket.
-	 * 
+	 *
 	 * @param products
 	 *            Product Names
 	 */
@@ -100,19 +101,19 @@ public class AnatwineBasket {
 	}
 
 	/**
-	 * 
+	 *
 	 * Instantiate and apply {@link Discount} rules.
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	private void calculateDiscounts() {
 
-		Discount trousersDiscount = new GenericReductionDiscount(ProductCatalogue.Trousers, ProductCatalogue.Trousers,
+		IDiscount trousersDiscount = new GenericReductionDiscount(ProductCatalogue.Trousers, ProductCatalogue.Trousers,
 				1, 0.1D);
 
 		applyDiscountStrategy(trousersDiscount);
 
-		Discount bulkShirtPurchaseDiscount = new GenericReductionDiscount(ProductCatalogue.Shirt, ProductCatalogue.Tie,
+		IDiscount bulkShirtPurchaseDiscount = new GenericReductionDiscount(ProductCatalogue.Shirt, ProductCatalogue.Tie,
 				2, 0.5D);
 
 		applyDiscountStrategy(bulkShirtPurchaseDiscount);
@@ -121,21 +122,21 @@ public class AnatwineBasket {
 
 	/**
 	 * Calls the apply discount rule of passed {@link Discount}
-	 * 
+	 *
 	 * @param discount
 	 *            discount strategy
 	 */
-	private void applyDiscountStrategy(Discount discount) {
+	private void applyDiscountStrategy(IDiscount discount) {
 
 		discount.applyDiscountRule(this);
 
 	}
 
 	/**
-	 * 
+	 *
 	 * Creates a {@link Product} object using the {@link ProductCatalogue} as a
 	 * lookup and, if valid, adds it to the basket's map.
-	 * 
+	 *
 	 * @param product
 	 *            Product Name
 	 */
@@ -153,7 +154,7 @@ public class AnatwineBasket {
 	/**
 	 * Calculate and output to the console the sub total using the
 	 * {@link Product} unit price and the number stored in the basket's map.
-	 * 
+	 *
 	 * @return sub total amount of all products in the basket.
 	 */
 	private void calculateSubTotal() {
@@ -173,10 +174,10 @@ public class AnatwineBasket {
 	}
 
 	/**
-	 * 
+	 *
 	 * Return the total cost of the product, multiplying the unit price by the
 	 * quantity.
-	 * 
+	 *
 	 * @param product
 	 *            a Product
 	 * @return a total amount
@@ -194,7 +195,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Set basket sub total.
-	 * 
+	 *
 	 * @param subTotal
 	 *            amount
 	 */
@@ -226,7 +227,7 @@ public class AnatwineBasket {
 	/**
 	 * The basket map, {@link Product} is the Key and Integer quantity amount as
 	 * the Value
-	 * 
+	 *
 	 * @returning the map.
 	 */
 	public Map<Product, Integer> getBasketProducts() {
@@ -235,7 +236,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Map of calculated discount text and amounts.
-	 * 
+	 *
 	 * @return Discount Map
 	 */
 	public Map<String, BigDecimal> getDiscounts() {
@@ -243,9 +244,9 @@ public class AnatwineBasket {
 	}
 
 	/**
-	 * 
+	 *
 	 * Set Discount Map.
-	 * 
+	 *
 	 * @param discounts
 	 *            map of discounts
 	 */
@@ -255,7 +256,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Checks if basket contains products;
-	 * 
+	 *
 	 * @return true if basket products found; false otherwise.
 	 */
 	public boolean isValid() {
@@ -264,7 +265,7 @@ public class AnatwineBasket {
 
 	/**
 	 * Print Receipt. Sub-total, any Discounts and Grand Total.
-	 * 
+	 *
 	 * @return String receipt
 	 */
 	public String printReceipt() {
