@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.anatwine.shopping.basket;
+package com.anatwine.shopping.controller;
 
+import com.anatwine.shopping.basket.Basket;
 import com.anatwine.shopping.view.BasketView;
 
 /**

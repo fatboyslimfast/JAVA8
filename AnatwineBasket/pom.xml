@@ -20,7 +20,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.anatwine.shopping.basket.MainController</mainClass>
+							<mainClass>com.anatwine.shopping.controller.MainController</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

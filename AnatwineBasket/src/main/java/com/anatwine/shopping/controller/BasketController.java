@@ -1,11 +1,12 @@
 /**
  *
  */
-package com.anatwine.shopping.basket;
+package com.anatwine.shopping.controller;
 
 import java.util.Scanner;
 
 import com.anatwine.shopping.Constants;
+import com.anatwine.shopping.basket.Basket;
 import com.anatwine.shopping.view.BasketView;
 
 /**
@@ -29,7 +30,7 @@ public class BasketController {
 	}
 
 	/**
-	 * Get the user entry and add to basket and print the receipt.
+	 * Get the user entry and add to basket and prints the receipt.
 	 */
 	public void processUserEntry() {
 		String[] enteredProducts = getInput();
@@ -44,7 +45,7 @@ public class BasketController {
 	 */
 	private static String[] getInput() {
 		System.out.print("AnatwineBasket ");
-		Scanner stdin = new Scanner(System.in);
+		Scanner stdin = getScanner();
 		String text = stdin.nextLine();
 		stdin.close();
 
@@ -54,6 +55,13 @@ public class BasketController {
 		}
 
 		return text.split(" ");
+	}
+
+	/**
+	 * @return Scanner
+	 */
+	protected static Scanner getScanner() {
+		return new Scanner(System.in);
 	}
 
 }

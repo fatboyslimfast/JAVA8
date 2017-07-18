@@ -36,7 +36,7 @@ public class Basket {
 	 * @param products
 	 *            Product Names
 	 */
-	protected void processProducts(String[] products) {
+	public void processProducts(String[] products) {
 
 		emptyBasket();
 
