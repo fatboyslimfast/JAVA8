@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
@@ -30,37 +29,6 @@ public class Basket {
 	private BigDecimal subTotal = BigDecimal.ZERO;
 
 	private Map<String, BigDecimal> discounts = new LinkedHashMap<>();
-
-	/**
-	 * @param products
-	 *            Array of Product Names
-	 */
-	public static void main(String[] products) {
-
-		String[] enteredProducts = getInput();
-
-		Basket basket = new Basket();
-		basket.processProducts(enteredProducts);
-	}
-
-	/**
-	 * Return user input as String array
-	 *
-	 * @return String array
-	 */
-	private static String[] getInput() {
-		System.out.print("AnatwineBasket ");
-		Scanner stdin = new Scanner(System.in);
-		String text = stdin.nextLine();
-		stdin.close();
-
-		if (text == null || text.trim().equals("")) {
-			System.err.println(Constants.NO_ITEMS_ENTERED_MSG);
-			throw new IllegalArgumentException(Constants.NO_ITEMS_ENTERED_MSG);
-		}
-
-		return text.split(" ");
-	}
 
 	/**
 	 * Given an array of String product names, add these to the basket.
