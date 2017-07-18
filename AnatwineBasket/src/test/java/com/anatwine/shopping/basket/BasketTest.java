@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
@@ -21,7 +20,7 @@ import com.anatwine.shopping.Utils;
  * @author Pete
  *
  */
-public class AnatwineBasketTest {
+public class BasketTest {
 
 	private static final String JACKET = "Jacket";
 	private static final String SHIRT = "Shirt";
@@ -29,13 +28,13 @@ public class AnatwineBasketTest {
 	private static final String COAT = "Coat";
 	private static final String TROUSERS = "Trousers";
 
-	private AnatwineBasket basket;
+	private Basket basket;
 
 	@Before
 	public void setUp() throws Exception {
 
 		// class we are testing
-		basket = spy(new AnatwineBasket());
+		basket = spy(new Basket());
 
 	}
 
@@ -321,58 +320,6 @@ public class AnatwineBasketTest {
 				fail("Unknown discount entry");
 			}
 		}
-
-	}
-
-	@Test
-	public void shouldPrintBasketReceiptWithDiscounts() {
-
-		// given
-		when(basket.getSubTotal()).thenReturn(new BigDecimal("10.00"));
-		Map<String, BigDecimal> discounts = new LinkedHashMap<>();
-		discounts.put("Offer 1", new BigDecimal("-1.00"));
-		discounts.put("Offer 2", new BigDecimal("-2.00"));
-		doReturn(discounts).when(basket).getDiscounts();
-
-		// when
-		String receipt = basket.printReceipt();
-
-		// then
-
-		StringBuffer expectedReceipt = new StringBuffer("Sub Total : £10.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("Offer 1: -£1.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("Offer 2: -£2.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("Total : £7.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("===================================================================================");
-
-		assertEquals(expectedReceipt.toString(), receipt);
-
-	}
-
-	@Test
-	public void shouldPrintBasketReceiptWithoutDiscounts() {
-
-		// given
-		when(basket.getSubTotal()).thenReturn(new BigDecimal("10.00"));
-		Map<String, BigDecimal> discounts = new LinkedHashMap<>();
-		doReturn(discounts).when(basket).getDiscounts();
-
-		// when
-		String receipt = basket.printReceipt();
-
-		StringBuffer expectedReceipt = new StringBuffer("Sub Total : £10.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("(No offers available)");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("Total : £10.00");
-		expectedReceipt.append("\n");
-		expectedReceipt.append("===================================================================================");
-
-		assertEquals(expectedReceipt.toString(), receipt);
 
 	}
 

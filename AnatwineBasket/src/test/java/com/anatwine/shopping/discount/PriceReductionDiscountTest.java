@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.anatwine.shopping.Utils;
-import com.anatwine.shopping.basket.AnatwineBasket;
+import com.anatwine.shopping.basket.Basket;
 import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 
@@ -36,7 +36,7 @@ public class PriceReductionDiscountTest {
 	private ProductCatalogue destinationProduct;
 	private Integer qualifyingQuantity;
 	private Double percentageOff;
-	private AnatwineBasket mockAnatwineBasket;
+	private Basket mockAnatwineBasket;
 	private HashMap<String, BigDecimal> discounts;
 
 	@Before
@@ -51,7 +51,7 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount = spy(
 				new GenericReductionDiscount(sourceProduct, destinationProduct, qualifyingQuantity, percentageOff));
 
-		mockAnatwineBasket = mock(AnatwineBasket.class);
+		mockAnatwineBasket = mock(Basket.class);
 		discounts = new HashMap<>();
 		when(mockAnatwineBasket.getDiscounts()).thenReturn(discounts);
 

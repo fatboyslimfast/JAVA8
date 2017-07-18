@@ -3,7 +3,7 @@ package com.anatwine.shopping.discount;
 import java.math.BigDecimal;
 
 import com.anatwine.shopping.Constants;
-import com.anatwine.shopping.basket.AnatwineBasket;
+import com.anatwine.shopping.basket.Basket;
 import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 
@@ -25,7 +25,7 @@ public abstract class Discount implements IDiscount {
 	/*
 	 * Return the Product Total Cost Price
 	 */
-	protected static BigDecimal getProductTotal(Product product, AnatwineBasket basket) {
+	protected static BigDecimal getProductTotal(Product product, Basket basket) {
 		return product.getUnitPrice().multiply(new BigDecimal(basket.getBasketProducts().get(product)));
 	}
 

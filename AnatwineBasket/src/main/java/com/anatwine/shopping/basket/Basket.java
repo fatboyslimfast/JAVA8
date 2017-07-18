@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import com.anatwine.shopping.Constants;
-import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 import com.anatwine.shopping.discount.Discount;
 import com.anatwine.shopping.discount.DiscountFactory;
@@ -23,7 +22,7 @@ import com.anatwine.shopping.discount.DiscountFactory;
  * @author Pete
  *
  */
-public class AnatwineBasket {
+public class Basket {
 
 	// Product and Quantity
 	private Map<Product, Integer> basketProducts = new HashMap<>();
@@ -40,7 +39,7 @@ public class AnatwineBasket {
 
 		String[] enteredProducts = getInput();
 
-		AnatwineBasket basket = new AnatwineBasket();
+		Basket basket = new Basket();
 		basket.processProducts(enteredProducts);
 	}
 
@@ -86,7 +85,6 @@ public class AnatwineBasket {
 
 		computeTotals();
 
-		System.out.println(printReceipt());
 	}
 
 	/**
@@ -173,7 +171,7 @@ public class AnatwineBasket {
 	 *            a Product
 	 * @return a total amount
 	 */
-	private BigDecimal getProductTotal(Product product) {
+	public BigDecimal getProductTotal(Product product) {
 		return product.getUnitPrice().multiply(new BigDecimal(getBasketProducts().get(product)));
 	}
 
@@ -190,14 +188,14 @@ public class AnatwineBasket {
 	 * @param subTotal
 	 *            amount
 	 */
-	private void setSubTotal(BigDecimal subTotal) {
+	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
 	}
 
 	/**
 	 * @return the sub total.
 	 */
-	protected BigDecimal getSubTotal() {
+	public BigDecimal getSubTotal() {
 		return subTotal;
 	}
 
@@ -252,32 +250,6 @@ public class AnatwineBasket {
 	 */
 	public boolean isValid() {
 		return !getBasketProducts().isEmpty();
-	}
-
-	/**
-	 * Print Receipt. Sub-total, any Discounts and Grand Total.
-	 *
-	 * @return String receipt
-	 */
-	public String printReceipt() {
-
-		StringBuffer basket = new StringBuffer(Constants.SUB_TOTAL_MSG).append(Utils.formatAmount(getSubTotal()));
-		basket.append("\n");
-		if (getDiscounts().size() > 0) {
-			for (String key : getDiscounts().keySet()) {
-				basket.append(key + ": " + Utils.formatAmount(getDiscounts().get(key)));
-				basket.append("\n");
-			}
-		} else {
-			basket.append(Constants.NO_OFFERS_AVAILABLE_MSG);
-			basket.append("\n");
-		}
-
-		basket.append(Constants.TOTAL_MSG).append(Utils.formatAmount(getSubTotal().add(getDiscountTotal())));
-		basket.append("\n");
-		basket.append("===================================================================================");
-
-		return basket.toString();
 	}
 
 }
