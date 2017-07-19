@@ -33,7 +33,8 @@ public abstract class Discount implements IDiscount {
 	/**
 	 * @return the source {@link Product}
 	 */
-	protected ProductCatalogue getSourceProduct() {
+	@Override
+	public ProductCatalogue getSourceProduct() {
 		return sourceProduct;
 	}
 
@@ -41,14 +42,16 @@ public abstract class Discount implements IDiscount {
 	 * @param sourceProduct
 	 *            set the source {@link Product}
 	 */
-	protected void setSourceProduct(ProductCatalogue sourceProduct) {
+	@Override
+	public void setSourceProduct(ProductCatalogue sourceProduct) {
 		this.sourceProduct = sourceProduct;
 	}
 
 	/**
 	 * @return the percentage reduction to be applied.
 	 */
-	protected Double getPercentageOff() {
+	@Override
+	public Double getPercentageOff() {
 		return percentageOff;
 	}
 
@@ -56,21 +59,24 @@ public abstract class Discount implements IDiscount {
 	 * @param percentageOff
 	 *            set the percentage reduction to be applied.
 	 */
-	protected void setPercentageOff(Double percentageOff) {
+	@Override
+	public void setPercentageOff(Double percentageOff) {
 		this.percentageOff = isValidPercentageOff(percentageOff);
 	}
 
 	/**
 	 * @return the percentage reduction to be applied as String representation.
 	 */
-	protected String getPercentageOffString() {
+	@Override
+	public String getPercentageOffString() {
 		return String.valueOf(getPercentageOff() * 100).concat(Constants.PERCENTAGE_SYMBOL);
 	}
 
 	/**
 	 * @return the destination {@link Product}
 	 */
-	protected ProductCatalogue getDestinationProduct() {
+	@Override
+	public ProductCatalogue getDestinationProduct() {
 		return destinationProduct;
 	}
 
@@ -78,14 +84,16 @@ public abstract class Discount implements IDiscount {
 	 * @param destinationProduct
 	 *            set the Destination {@link Product}
 	 */
-	protected void setDestinationProduct(ProductCatalogue destinationProduct) {
+	@Override
+	public void setDestinationProduct(ProductCatalogue destinationProduct) {
 		this.destinationProduct = destinationProduct;
 	}
 
 	/**
 	 * @return the qualifying quantity.
 	 */
-	protected Integer getQualifyingQuantity() {
+	@Override
+	public Integer getQualifyingQuantity() {
 		return qualifyingQuantity;
 	}
 
@@ -93,7 +101,8 @@ public abstract class Discount implements IDiscount {
 	 * @param qualifyingQuantity
 	 *            set the qualifying quantity.
 	 */
-	protected void setQualifyingQuantity(Integer qualifyingQuantity) {
+	@Override
+	public void setQualifyingQuantity(Integer qualifyingQuantity) {
 		this.qualifyingQuantity = isValidQualifyingQuantity(qualifyingQuantity);
 	}
 
@@ -126,6 +135,20 @@ public abstract class Discount implements IDiscount {
 		}
 
 		return qualifyingQuantity;
+	}
+
+	@Override
+	public void applyDiscountRule(IBasket basket) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String toString() {
+
+		return getDestinationProduct().toString().concat(" ")
+				.concat(getPercentageOffString().concat(Constants.OFF_MESSAGE));
+
 	}
 
 }

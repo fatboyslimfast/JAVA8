@@ -35,6 +35,7 @@ public class BasketController {
 	public BasketController(IBasket basket, IBasketView view) {
 		this.basket = basket;
 		this.view = view;
+		emptyBasket();
 	}
 
 	/**

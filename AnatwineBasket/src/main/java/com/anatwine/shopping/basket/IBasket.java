@@ -3,6 +3,8 @@ package com.anatwine.shopping.basket;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import com.anatwine.shopping.discount.IDiscount;
+
 public interface IBasket {
 
 	/**
@@ -36,7 +38,7 @@ public interface IBasket {
 	 *
 	 * @return Discount Map
 	 */
-	Map<String, BigDecimal> getDiscounts();
+	Map<IDiscount, BigDecimal> getDiscounts();
 
 	/**
 	 *
@@ -45,7 +47,7 @@ public interface IBasket {
 	 * @param discounts
 	 *            map of discounts
 	 */
-	void setDiscounts(Map<String, BigDecimal> discounts);
+	void setDiscounts(Map<IDiscount, BigDecimal> discounts);
 
 	/**
 	 * Checks if basket contains products;

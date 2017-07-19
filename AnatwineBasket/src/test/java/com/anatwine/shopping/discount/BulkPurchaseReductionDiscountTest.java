@@ -33,7 +33,7 @@ public class BulkPurchaseReductionDiscountTest {
 	private Integer qualifyingQuantity;
 	private Double percentageOff;
 	private Basket mockAnatwineBasket;
-	private HashMap<String, BigDecimal> discounts;
+	private HashMap<IDiscount, BigDecimal> discounts;
 
 	@Before
 	public void setUp() throws Exception {
@@ -84,7 +84,7 @@ public class BulkPurchaseReductionDiscountTest {
 		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
+		for (IDiscount key : discounts.keySet()) {
 			assertEquals("Tie 50.0% Off ", key);
 			assertEquals(new BigDecimal("-4.750"), discounts.get(key));
 		}
@@ -105,7 +105,7 @@ public class BulkPurchaseReductionDiscountTest {
 		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
+		for (IDiscount key : discounts.keySet()) {
 			assertEquals("Tie 50.0% Off ", key);
 			assertEquals(new BigDecimal("-4.750"), discounts.get(key));
 		}
@@ -126,8 +126,8 @@ public class BulkPurchaseReductionDiscountTest {
 
 		// then
 
-		for (String key : discounts.keySet()) {
-			assertEquals("Tie 50.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key.toString());
 			assertEquals(new BigDecimal("-9.500"), discounts.get(key));
 		}
 	}
@@ -148,8 +148,8 @@ public class BulkPurchaseReductionDiscountTest {
 
 		mockAnatwineBasket.getDiscounts();
 
-		for (String key : discounts.keySet()) {
-			assertEquals("Tie 50.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key.toString());
 			assertEquals(new BigDecimal("-9.500"), discounts.get(key));
 		}
 	}
@@ -167,8 +167,8 @@ public class BulkPurchaseReductionDiscountTest {
 		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Tie 50.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Tie 50.0% Off ", key.toString());
 			assertEquals(new BigDecimal("-14.250"), discounts.get(key));
 		}
 	}
@@ -192,8 +192,8 @@ public class BulkPurchaseReductionDiscountTest {
 		bulkPurchaseReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Tie 100.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Tie 100.0% Off ", key.toString());
 			assertEquals(new BigDecimal("-9.50"), discounts.get(key));
 		}
 	}

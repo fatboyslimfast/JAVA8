@@ -6,14 +6,19 @@ package com.anatwine.shopping.view;
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.IBasket;
+import com.anatwine.shopping.discount.IDiscount;
 
 /**
  * @author Pete
  *
  */
 public class BasketView implements IBasketView {
-	/* (non-Javadoc)
-	 * @see com.anatwine.shopping.view.IBasketView#printReceipt(com.anatwine.shopping.basket.IBasket)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.anatwine.shopping.view.IBasketView#printReceipt(com.anatwine.shopping
+	 * .basket.IBasket)
 	 */
 	@Override
 	public String printReceipt(IBasket basket) {
@@ -22,8 +27,8 @@ public class BasketView implements IBasketView {
 				.append(Utils.formatAmount(basket.getSubTotal()));
 		receipt.append("\n");
 		if (basket.getDiscounts().size() > 0) {
-			for (String key : basket.getDiscounts().keySet()) {
-				receipt.append(key + ": " + Utils.formatAmount(basket.getDiscounts().get(key)));
+			for (IDiscount key : basket.getDiscounts().keySet()) {
+				receipt.append(key.toString()).append(": ").append(Utils.formatAmount(basket.getDiscounts().get(key)));
 				receipt.append("\n");
 			}
 		} else {

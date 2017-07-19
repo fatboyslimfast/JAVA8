@@ -13,6 +13,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.anatwine.shopping.discount.Discount;
+import com.anatwine.shopping.discount.IDiscount;
 import com.anatwine.shopping.view.BasketView;
 import com.anatwine.shopping.view.IBasketView;
 
@@ -24,6 +26,9 @@ public class BasketViewTest {
 
 	private Basket basket;
 	private IBasketView basketView;
+	private Discount discount1;
+	private Discount discount2;
+	private Discount discount3;
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,6 +37,13 @@ public class BasketViewTest {
 		// class we are testing
 		basketView = spy(new BasketView());
 
+		discount1 = mock(Discount.class);
+		when(discount1.toString()).thenReturn("Offer 1");
+		discount2 = mock(Discount.class);
+		when(discount2.toString()).thenReturn("Offer 2");
+		discount3 = mock(Discount.class);
+		when(discount3.toString()).thenReturn("Offer 3");
+
 	}
 
 	@Test
@@ -39,9 +51,9 @@ public class BasketViewTest {
 
 		// given
 		when(basket.getSubTotal()).thenReturn(new BigDecimal("10.00"));
-		Map<String, BigDecimal> discounts = new LinkedHashMap<>();
-		discounts.put("Offer 1", new BigDecimal("-1.00"));
-		discounts.put("Offer 2", new BigDecimal("-2.00"));
+		Map<IDiscount, BigDecimal> discounts = new LinkedHashMap<>();
+		discounts.put(discount1, new BigDecimal("-1.00"));
+		discounts.put(discount2, new BigDecimal("-2.00"));
 		doReturn(discounts).when(basket).getDiscounts();
 		when(basket.getDiscountTotal()).thenReturn(new BigDecimal("-3.00"));
 
@@ -71,7 +83,7 @@ public class BasketViewTest {
 		when(basket.getSubTotal()).thenReturn(new BigDecimal("10.00"));
 		when(basket.getDiscountTotal()).thenReturn(BigDecimal.ZERO);
 
-		Map<String, BigDecimal> discounts = new LinkedHashMap<>();
+		Map<IDiscount, BigDecimal> discounts = new LinkedHashMap<>();
 		doReturn(discounts).when(basket).getDiscounts();
 
 		// when

@@ -37,7 +37,7 @@ public class PriceReductionDiscountTest {
 	private Integer qualifyingQuantity;
 	private Double percentageOff;
 	private Basket mockAnatwineBasket;
-	private HashMap<String, BigDecimal> discounts;
+	private HashMap<IDiscount, BigDecimal> discounts;
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,6 +53,7 @@ public class PriceReductionDiscountTest {
 
 		mockAnatwineBasket = mock(Basket.class);
 		discounts = new HashMap<>();
+
 		when(mockAnatwineBasket.getDiscounts()).thenReturn(discounts);
 
 	}
@@ -71,7 +72,7 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
+		for (IDiscount key : discounts.keySet()) {
 			assertEquals("Trousers 10.0% Off ", key);
 			assertEquals(Utils.formatAmount(new BigDecimal("-7.10")), Utils.formatAmount(discounts.get(key)));
 		}
@@ -92,8 +93,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 10.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 10.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-3.55")), Utils.formatAmount(discounts.get(key)));
 		}
 	}
@@ -113,8 +114,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 10.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 10.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-7.10")), Utils.formatAmount(discounts.get(key)));
 		}
 	}
@@ -135,8 +136,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 10.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 10.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-10.65")), Utils.formatAmount(discounts.get(key)));
 		}
 	}
@@ -157,8 +158,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 10.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 10.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-355.00")), Utils.formatAmount(discounts.get(key)));
 		}
 	}
@@ -176,8 +177,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 100.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 100.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-35.50")), Utils.formatAmount(discounts.get(key)));
 		}
 
@@ -196,8 +197,8 @@ public class PriceReductionDiscountTest {
 		priceReductionDiscount.applyDiscountRule(mockAnatwineBasket);
 
 		// then
-		for (String key : discounts.keySet()) {
-			assertEquals("Trousers 100.0% Off ", key);
+		for (IDiscount key : discounts.keySet()) {
+			assertEquals("Trousers 100.0% Off ", key.toString());
 			assertEquals(Utils.formatAmount(new BigDecimal("-71.00")), Utils.formatAmount(discounts.get(key)));
 		}
 

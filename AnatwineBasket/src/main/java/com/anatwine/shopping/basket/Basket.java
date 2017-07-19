@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.anatwine.shopping.discount.IDiscount;
+
 /**
  *
  *
@@ -21,17 +23,22 @@ public class Basket implements IBasket {
 	// Total Basket Cost
 	private BigDecimal subTotal = BigDecimal.ZERO;
 
-	private Map<String, BigDecimal> discounts = new LinkedHashMap<>();
+	private Map<IDiscount, BigDecimal> discounts = new LinkedHashMap<>();
 
-	/* (non-Javadoc)
-	 * @see com.anatwine.shopping.basket.IBasket#setSubTotal(java.math.BigDecimal)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.anatwine.shopping.basket.IBasket#setSubTotal(java.math.BigDecimal)
 	 */
 	@Override
 	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#getSubTotal()
 	 */
 	@Override
@@ -39,14 +46,16 @@ public class Basket implements IBasket {
 		return subTotal;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#getDiscountTotal()
 	 */
 	@Override
 	public BigDecimal getDiscountTotal() {
 
 		BigDecimal sum = BigDecimal.ZERO;
-		for (String key : getDiscounts().keySet()) {
+		for (IDiscount key : getDiscounts().keySet()) {
 			sum = sum.add(getDiscounts().get(key));
 
 		}
@@ -54,7 +63,9 @@ public class Basket implements IBasket {
 		return sum;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#getBasketProducts()
 	 */
 	@Override
@@ -62,23 +73,29 @@ public class Basket implements IBasket {
 		return basketProducts;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#getDiscounts()
 	 */
 	@Override
-	public Map<String, BigDecimal> getDiscounts() {
+	public Map<IDiscount, BigDecimal> getDiscounts() {
 		return discounts;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#setDiscounts(java.util.Map)
 	 */
 	@Override
-	public void setDiscounts(Map<String, BigDecimal> discounts) {
+	public void setDiscounts(Map<IDiscount, BigDecimal> discounts) {
 		this.discounts = discounts;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.anatwine.shopping.basket.IBasket#isValid()
 	 */
 	@Override
