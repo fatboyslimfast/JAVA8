@@ -42,8 +42,8 @@ public class GenericReductionDiscount extends Discount {
 			int qualifyingQuantity, Double percentageOff) {
 		setSourceProduct(sourceProduct);
 		setDestinationProduct(destinationProduct);
-		setQualifyingQuantity(isValidQualifyingQuantity(qualifyingQuantity));
-		setPercentageOff(isValidPercentageOff(percentageOff));
+		setQualifyingQuantity(qualifyingQuantity);
+		setPercentageOff(percentageOff);
 	}
 
 	@Override

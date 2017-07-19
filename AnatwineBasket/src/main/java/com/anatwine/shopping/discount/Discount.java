@@ -57,7 +57,7 @@ public abstract class Discount implements IDiscount {
 	 *            set the percentage reduction to be applied.
 	 */
 	protected void setPercentageOff(Double percentageOff) {
-		this.percentageOff = percentageOff;
+		this.percentageOff = isValidPercentageOff(percentageOff);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class Discount implements IDiscount {
 	 *            set the qualifying quantity.
 	 */
 	protected void setQualifyingQuantity(Integer qualifyingQuantity) {
-		this.qualifyingQuantity = qualifyingQuantity;
+		this.qualifyingQuantity = isValidQualifyingQuantity(qualifyingQuantity);
 	}
 
 	/**
