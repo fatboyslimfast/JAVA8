@@ -17,8 +17,10 @@ import org.junit.Test;
 
 import com.anatwine.shopping.Utils;
 import com.anatwine.shopping.basket.Basket;
-import com.anatwine.shopping.basket.Product;
+import com.anatwine.shopping.basket.IBasket;
+import com.anatwine.shopping.basket.IProduct;
 import com.anatwine.shopping.view.BasketView;
+import com.anatwine.shopping.view.IBasketView;
 
 public class BasketControllerTest {
 
@@ -27,8 +29,8 @@ public class BasketControllerTest {
 	private static final String TIE = "Tie";
 	private static final String COAT = "Coat";
 	private static final String TROUSERS = "Trousers";
-	private Basket basket;
-	private BasketView basketView;
+	private IBasket basket;
+	private IBasketView basketView;
 	private BasketController basketController;
 
 	@Before
@@ -78,7 +80,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(1, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TROUSERS)) {
 				assertEquals(new Integer(1), basket.getBasketProducts().get(key));
 			}
@@ -97,7 +99,7 @@ public class BasketControllerTest {
 		// when
 		basketController.processProducts(products);
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TROUSERS)) {
 				assertEquals(new Integer(1), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(TIE)) {
@@ -127,7 +129,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(4, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TROUSERS)) {
 				assertEquals(new Integer(2), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(TIE)) {
@@ -153,7 +155,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(3, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TIE)) {
 				assertEquals(new Integer(2), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(SHIRT)) {
@@ -180,7 +182,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TIE)) {
 				assertEquals(new Integer(1), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(SHIRT)) {
@@ -205,7 +207,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TIE)) {
 				assertEquals(new Integer(2), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(SHIRT)) {
@@ -230,7 +232,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(2, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TIE)) {
 				assertEquals(new Integer(2), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(SHIRT)) {
@@ -255,7 +257,7 @@ public class BasketControllerTest {
 		assertTrue(basket.isValid());
 		assertEquals(3, basket.getBasketProducts().size());
 
-		for (Product key : basket.getBasketProducts().keySet()) {
+		for (IProduct key : basket.getBasketProducts().keySet()) {
 			if (key.getName().equals(TROUSERS)) {
 				assertEquals(new Integer(1), basket.getBasketProducts().get(key));
 			} else if (key.getName().equals(TIE)) {

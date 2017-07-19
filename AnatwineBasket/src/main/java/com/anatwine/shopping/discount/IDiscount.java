@@ -1,6 +1,6 @@
 package com.anatwine.shopping.discount;
 
-import com.anatwine.shopping.basket.Basket;
+import com.anatwine.shopping.basket.IBasket;
 
 public interface IDiscount {
 
@@ -11,6 +11,6 @@ public interface IDiscount {
 	 *            the current basket
 	 * @return total discount amount
 	 */
-	void applyDiscountRule(Basket basket);
+	void applyDiscountRule(IBasket basket);
 
 }

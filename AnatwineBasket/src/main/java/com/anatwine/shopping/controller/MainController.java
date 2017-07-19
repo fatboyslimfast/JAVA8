@@ -4,7 +4,9 @@
 package com.anatwine.shopping.controller;
 
 import com.anatwine.shopping.basket.Basket;
+import com.anatwine.shopping.basket.IBasket;
 import com.anatwine.shopping.view.BasketView;
+import com.anatwine.shopping.view.IBasketView;
 
 /**
  * @author Pete
@@ -17,9 +19,9 @@ public class MainController {
 	 */
 	public static void main(String[] args) {
 		// Create a new Basket
-		Basket model = new Basket();
+		IBasket model = new Basket();
 		// Create the view
-		BasketView view = new BasketView();
+		IBasketView view = new BasketView();
 		BasketController controller = new BasketController(model, view);
 		controller.processUserEntry();
 

@@ -5,19 +5,18 @@ package com.anatwine.shopping.view;
 
 import com.anatwine.shopping.Constants;
 import com.anatwine.shopping.Utils;
-import com.anatwine.shopping.basket.Basket;
+import com.anatwine.shopping.basket.IBasket;
 
 /**
  * @author Pete
  *
  */
-public class BasketView {
-	/**
-	 * Print Receipt. Sub-total, any Discounts and Grand Total.
-	 *
-	 * @return String receipt
+public class BasketView implements IBasketView {
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.view.IBasketView#printReceipt(com.anatwine.shopping.basket.IBasket)
 	 */
-	public String printReceipt(Basket basket) {
+	@Override
+	public String printReceipt(IBasket basket) {
 
 		StringBuffer receipt = new StringBuffer(Constants.SUB_TOTAL_MSG)
 				.append(Utils.formatAmount(basket.getSubTotal()));

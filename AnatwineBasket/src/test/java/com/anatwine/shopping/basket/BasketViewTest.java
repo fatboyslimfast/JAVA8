@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.anatwine.shopping.view.BasketView;
+import com.anatwine.shopping.view.IBasketView;
 
 /**
  * @author Pete
@@ -22,7 +23,7 @@ import com.anatwine.shopping.view.BasketView;
 public class BasketViewTest {
 
 	private Basket basket;
-	private BasketView basketView;
+	private IBasketView basketView;
 
 	@Before
 	public void setUp() throws Exception {

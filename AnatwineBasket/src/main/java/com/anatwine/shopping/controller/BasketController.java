@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.anatwine.shopping.Constants;
-import com.anatwine.shopping.basket.Basket;
+import com.anatwine.shopping.basket.IBasket;
+import com.anatwine.shopping.basket.IProduct;
 import com.anatwine.shopping.basket.Product;
 import com.anatwine.shopping.catalogue.ProductCatalogue;
 import com.anatwine.shopping.discount.Discount;
 import com.anatwine.shopping.discount.DiscountFactory;
-import com.anatwine.shopping.view.BasketView;
+import com.anatwine.shopping.view.IBasketView;
 
 /**
  *
@@ -24,14 +25,14 @@ import com.anatwine.shopping.view.BasketView;
  */
 public class BasketController {
 
-	private Basket basket;
-	private BasketView view;
+	private IBasket basket;
+	private IBasketView view;
 
 	/**
 	 * @param basket
 	 * @param view
 	 */
-	public BasketController(Basket basket, BasketView view) {
+	public BasketController(IBasket basket, IBasketView view) {
 		this.basket = basket;
 		this.view = view;
 	}
@@ -138,7 +139,7 @@ public class BasketController {
 
 			BigDecimal amount = BigDecimal.ZERO;
 
-			for (Product key : basket.getBasketProducts().keySet()) {
+			for (IProduct key : basket.getBasketProducts().keySet()) {
 				amount = amount.add(getProductTotal(key));
 			}
 
@@ -157,7 +158,7 @@ public class BasketController {
 	 *            a Product
 	 * @return a total amount
 	 */
-	public BigDecimal getProductTotal(Product product) {
+	public BigDecimal getProductTotal(IProduct product) {
 		return product.getUnitPrice().multiply(new BigDecimal(basket.getBasketProducts().get(product)));
 	}
 

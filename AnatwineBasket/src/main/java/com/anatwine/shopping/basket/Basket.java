@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Pete
  *
  */
-public class Basket {
+public class Basket implements IBasket {
 
 	// Product and Quantity
 	private Map<Product, Integer> basketProducts = new HashMap<>();
@@ -23,26 +23,26 @@ public class Basket {
 
 	private Map<String, BigDecimal> discounts = new LinkedHashMap<>();
 
-	/**
-	 * Set basket sub total.
-	 *
-	 * @param subTotal
-	 *            amount
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#setSubTotal(java.math.BigDecimal)
 	 */
+	@Override
 	public void setSubTotal(BigDecimal subTotal) {
 		this.subTotal = subTotal;
 	}
 
-	/**
-	 * @return the sub total.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#getSubTotal()
 	 */
+	@Override
 	public BigDecimal getSubTotal() {
 		return subTotal;
 	}
 
-	/**
-	 * @return the discount total.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#getDiscountTotal()
 	 */
+	@Override
 	public BigDecimal getDiscountTotal() {
 
 		BigDecimal sum = BigDecimal.ZERO;
@@ -54,41 +54,34 @@ public class Basket {
 		return sum;
 	}
 
-	/**
-	 * The basket map, {@link Product} is the Key and Integer quantity amount as
-	 * the Value
-	 *
-	 * @returning the map.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#getBasketProducts()
 	 */
+	@Override
 	public Map<Product, Integer> getBasketProducts() {
 		return basketProducts;
 	}
 
-	/**
-	 * Map of calculated discount text and amounts.
-	 *
-	 * @return Discount Map
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#getDiscounts()
 	 */
+	@Override
 	public Map<String, BigDecimal> getDiscounts() {
 		return discounts;
 	}
 
-	/**
-	 *
-	 * Set Discount Map.
-	 *
-	 * @param discounts
-	 *            map of discounts
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#setDiscounts(java.util.Map)
 	 */
+	@Override
 	public void setDiscounts(Map<String, BigDecimal> discounts) {
 		this.discounts = discounts;
 	}
 
-	/**
-	 * Checks if basket contains products;
-	 *
-	 * @return true if basket products found; false otherwise.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IBasket#isValid()
 	 */
+	@Override
 	public boolean isValid() {
 		return !getBasketProducts().isEmpty();
 	}

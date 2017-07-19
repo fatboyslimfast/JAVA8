@@ -15,44 +15,40 @@ import com.anatwine.shopping.catalogue.ProductCatalogue;
  * @author Pete
  *
  */
-public class Product {
+public class Product implements IProduct {
 
 	private String name;
 
 	private BigDecimal unitPrice;
 
-	/**
-	 * @return the Product name.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IProduct#getName()
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Set the Product name.
-	 * 
-	 * @param name
-	 *            Product name
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IProduct#setName(java.lang.String)
 	 */
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * Get the Product's Unit price.
-	 * 
-	 * @return unit price.
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IProduct#getUnitPrice()
 	 */
+	@Override
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	/**
-	 * Set the Product's Unit price.
-	 * 
-	 * @param unitPrice
-	 *            unit price
+	/* (non-Javadoc)
+	 * @see com.anatwine.shopping.basket.IProduct#setUnitPrice(java.math.BigDecimal)
 	 */
+	@Override
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
 	}
