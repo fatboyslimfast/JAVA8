@@ -1,7 +1,7 @@
 /**
  * 
  */
-package java8.ocp.sg2.chapter6;
+package java8.ocp.sg2.chapter6.review;
 
 /**
  * @author Pete
@@ -23,13 +23,10 @@ public class StuckTurkeyCage implements AutoCloseable {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		try (StuckTurkeyCage t = new StuckTurkeyCage()) {
 			System.out.println("put turkeys in");
-		} catch (Exception e) {
-			System.out.println("caught exception; " + e.getMessage());
 		}
-
 	}
 
 }
