@@ -126,7 +126,7 @@ public class ExamOne {
 
 	}
 
-	public static void Question1() throws InterruptedException {
+	public static void Question1() throws Exception {
 		LocalTime now = LocalTime.now();
 		LocalTime earlierTime = LocalTime.of(8, 30).withMinute(now.getMinute());
 		LocalTime laterTime = LocalTime.of(12, 30).withMinute(now.getMinute());
