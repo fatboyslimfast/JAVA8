@@ -1,7 +1,7 @@
 /**
  * 
  */
-package java8.ocp.whizzlabs.exam.one;
+package java8.ocp.whizzlabs.exam;
 
 /**
  * @author Pete
@@ -9,6 +9,7 @@ package java8.ocp.whizzlabs.exam.one;
  */
 public class Student {
 
+	private int id;
 	private String name;
 	private Department department;
 	private Gender gender;
@@ -25,6 +26,15 @@ public class Student {
 		this.name = name;
 		this.department = department;
 		this.gender = gender;
+	}
+
+	/**
+	 * @param id
+	 * @param name
+	 */
+	public Student(int id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 
 	public String getName() {
@@ -68,8 +78,13 @@ public class Student {
 	}
 
 	@Override
+	// public String toString() {
+	// return this.name + " is a student member in department " +
+	// this.department;
+	// }
+
 	public String toString() {
-		return this.name + " is a student member in department " + this.department;
+		return name;
 	}
 
 	enum Department {
@@ -82,6 +97,14 @@ public class Student {
 
 	enum Faculty {
 		ENGINEERING, MEDICINE
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
