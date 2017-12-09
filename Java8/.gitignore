@@ -54,3 +54,5 @@ local.properties
 .loadpath
 .index
 *.index
+/file1.txt
+/file2.txt
