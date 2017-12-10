@@ -676,7 +676,11 @@ public class ExamThree {
 			System.out.println("Q49.");
 			throw new IOException("IO Exception");
 		} catch (IOException | RuntimeException e) {
+<<<<<<< HEAD
 			e = new RuntimeException();
+=======
+			// e = new RuntimeException();
+>>>>>>> branch 'master' of https://github.com/fatboyslimfast/JAVA8.git
 			e.printStackTrace();
 			// throw new RuntimeException(e);
 		}
@@ -808,7 +812,7 @@ public class ExamThree {
 
 	private static void Question60() {
 		System.out.println("Q60.");
-		java.time.
+
 
 	}
 
