@@ -16,13 +16,18 @@ public class Student {
 	private Faculty faculty;
 	private double mark;
 
-	Student(String name, Faculty faculty, double mark) {
+	public Student(String name, Faculty faculty) {
+		this.name = name;
+		this.faculty = faculty;
+	}
+
+	public Student(String name, Faculty faculty, double mark) {
 		this.name = name;
 		this.faculty = faculty;
 		this.mark = mark;
 	}
 
-	Student(String name, Department department, Gender gender) {
+	public Student(String name, Department department, Gender gender) {
 		this.name = name;
 		this.department = department;
 		this.gender = gender;
@@ -95,8 +100,8 @@ public class Student {
 		MALE, FEMALE
 	}
 
-	enum Faculty {
-		ENGINEERING, MEDICINE
+	public enum Faculty {
+		ENGINEERING, MEDICINE, BUSINESS
 	}
 
 	public int getId() {
