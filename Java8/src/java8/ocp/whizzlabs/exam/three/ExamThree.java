@@ -30,6 +30,7 @@ import java.util.OptionalDouble;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -40,10 +41,12 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import java8.ocp.whizzlabs.exam.Data;
 import java8.ocp.whizzlabs.exam.Movie;
 import java8.ocp.whizzlabs.exam.Student;
+import java8.ocp.whizzlabs.exam.one.LineUtil;
 
 /**
  * @author Pete
@@ -139,7 +142,28 @@ public class ExamThree {
 	}
 
 	private static void Question4() {
-		// System.out.println("QXX.");
+		LineUtil.printLines(3);
+		System.out.println("Q4");
+
+		AtomicInteger ai = new AtomicInteger();
+
+		ai.addAndGet(1);
+
+		ai.set(1);
+
+		ai.decrementAndGet();
+
+		ai.getAndAdd(1);
+
+		ai.getAndDecrement();
+
+		ai.getAndSet(1);
+
+		ai.getAndIncrement();
+
+		System.out.println(ai);
+
+		LineUtil.printLines(3);
 
 	}
 
@@ -177,16 +201,24 @@ public class ExamThree {
 
 	private static void Question9() {
 		System.out.println("Q9.");
-		List<? extends Vehicle> list1 = new ArrayList<>();
-		List<? super Car> list2 = new ArrayList<>();
-		// list1.add(new Car());
-		// list1.add(new Vehicle());
+		List<? extends AVehicle> list1 = new ArrayList<>();
+		System.out.println("List<? extends AVehicle> list1 - means assignable from anything of type AVehicle, \n "
+				+ "or any subclasses of type AVehicle. This is read only, and can’t add anything to this collection.");
+
+		List<? super ACar> list2 = new ArrayList<>();
+
+		System.out.println("List<? super ACar> list2  means assignable from anything of type ACar, \n "
+				+ "or any superclasses of type ACar. You can add any subclasses of type ACar because of polymorphism where a "
+				+ "parent type reference can hold its subclass types.");
+
+		// list1.add(new ACar());
+		// list1.add(new AVehicle());
 		// list1.add(new Ford());
 		// Ford myFord = (Ford) list1.get(0);
 
-		// list2.add(new Car());
-		// list2.add(new Vehicle());
-		list2.add(new Ford());
+		list2.add(new ACar());
+		// list2.add(new AVehicle());
+		// list2.add(new Ford());
 
 	}
 
@@ -303,6 +335,11 @@ public class ExamThree {
 
 	private static void Question17() {
 		System.out.println("Q17.");
+
+	}
+
+	private static void Question18() {
+		System.out.println("Q18.");
 		Path path1 = Paths.get("C:", "Users", "Pete", "exam", "file.txt");
 
 		Path path2 = path1.resolveSibling("text.txt");
@@ -319,13 +356,9 @@ public class ExamThree {
 
 	}
 
-	private static void Question18() {
-		// System.out.println("QXX.");
-
-	}
-
 	private static void Question19() {
-		// System.out.println("QXX.");
+		System.out.println("Q19. A watch key has a state. When initially created the key is said to be ready. \n "
+				+ "When an event is detected then the key is signalled and queued so that it can be retrieved by invoking the watch service's poll or take methods. ");
 
 	}
 
@@ -340,7 +373,7 @@ public class ExamThree {
 	}
 
 	public static void Question21() throws Exception {
-		System.out.println("Q20.");
+		System.out.println("Q21. - LocalDate.of requires infrmation to at least the level of minutes.");
 
 		LocalDateTime date1 = LocalDateTime.of(2017, Month.JANUARY, 1, 0, 0);
 		LocalDateTime date2 = LocalDateTime.of(2017, Month.JANUARY, 2, 0, 0);
@@ -352,7 +385,20 @@ public class ExamThree {
 	}
 
 	private static void Question22() {
-		// System.out.println("QXX.");
+		System.out.println("Q22.");
+
+		Path path1 = Paths.get("C:\\Users\\Pete\\exam");
+		Path path2 = Paths.get("index.html");
+		try {
+
+			System.out.println(path1.relativize(path2));
+
+		} catch (Exception e) {
+			System.out.println("Cannot relativize path if one Path has root component");
+			System.out.println(e.getMessage());
+		}
+
+		LineUtil.printLines(5);
 
 	}
 
@@ -440,6 +486,18 @@ public class ExamThree {
 
 	public static void Question31() throws Exception {
 
+		Stream<String> stream = Stream.of("a", "b", "c");
+
+		System.out.println("stream().isParallel() : " + stream.isParallel());
+
+		System.out.println("stream().parallel.isParallel() : " + stream.parallel().isParallel());
+
+		stream.count();
+
+		System.out.println("stream().isParallel() : " + stream.isParallel());
+
+		LineUtil.printLines(5);
+
 	}
 
 	private static void Question32() {
@@ -485,13 +543,22 @@ public class ExamThree {
 	}
 
 	private static void Question35() {
+
+		LineUtil.printLines(5);
+
 		System.out.println("Q35.");
 		List<Integer> list = Arrays.asList(1, 2, 3, 4);
 		list.stream().filter(x -> {
 			System.out.println(x);
 			return x % 2 == 0;
 		});
-		// .forEach(System.out::println);
+
+		System.out.println("Intermediate operation needs a terminal operation");
+
+		long count = list.stream().filter(x -> {
+			System.out.println(x);
+			return x % 2 == 0;
+		}).count();
 
 	}
 
@@ -520,6 +587,10 @@ public class ExamThree {
 		System.out.println(map);
 
 		map.putIfAbsent("pete", Arrays.asList("c", "d"));
+
+		System.out.println(map);
+
+		map.computeIfAbsent("carrie", (k) -> new ArrayList<>());
 
 		System.out.println(map);
 
@@ -572,9 +643,15 @@ public class ExamThree {
 	}
 
 	private static void Question40() {
+		LineUtil.printLines(4);
+
 		System.out.println("Q40.");
 
 		List<Integer> list = Arrays.asList(1, 2, 3, 4);
+
+		list.stream().forEach(i -> new Data(i).output());
+
+		LineUtil.printLines(2);
 
 		list.stream().map(i -> {
 			Function<Integer, Data> func = Data::new;
@@ -584,6 +661,7 @@ public class ExamThree {
 	}
 
 	public static void Question41() throws Exception {
+		LineUtil.printLines(5);
 		System.out.println("Q41.");
 
 		List<String> letters = Arrays.asList("a", "b", "c", "d");
@@ -596,6 +674,28 @@ public class ExamThree {
 
 	private static void Question42() {
 		System.out.println("Q42.");
+
+		String input = "i am lower case";
+
+		System.out.println(input);
+
+		Function<String, String> function = s -> s.toUpperCase().replace("LOWER", "UPPER");
+
+		String output = function.apply(input);
+
+		System.out.println(output);
+
+		LineUtil.printLines(3);
+
+	}
+
+	private static void Question43() {
+		System.out.println("Q43.");
+
+	}
+
+	private static void Question44() {
+		System.out.println("Q44.");
 
 		Account account1 = new Account(1, 50.0);
 		Account account2 = new Account(2, 200.0);
@@ -620,16 +720,6 @@ public class ExamThree {
 
 	}
 
-	private static void Question43() {
-		System.out.println("Q43.");
-
-	}
-
-	private static void Question44() {
-		// System.out.println("QXX.");
-
-	}
-
 	private static void Question45() {
 		System.out.println("Q45.");
 		List<Student> students = Arrays.asList(new Student(1, "Alex"), new Student(2, "Max"));
@@ -647,6 +737,8 @@ public class ExamThree {
 		UnaryOperator<String> operator = s -> s.toLowerCase();
 		Consumer<String> consumer = s -> System.out.print(s);
 		list.stream().map(operator).forEach(consumer);
+
+		LineUtil.printLines(5);
 
 	}
 
@@ -673,16 +765,13 @@ public class ExamThree {
 
 	private static void Question49() {
 
+		System.out.println("Q49.");
 		try {
-			System.out.println("Q49.");
+
 			throw new IOException("IO Exception");
 		} catch (IOException | RuntimeException e) {
-<<<<<<< HEAD
-			e = new RuntimeException();
-=======
 			// e = new RuntimeException();
->>>>>>> branch 'master' of https://github.com/fatboyslimfast/JAVA8.git
-			e.printStackTrace();
+			// e.printStackTrace();
 			// throw new RuntimeException(e);
 		}
 
@@ -723,7 +812,7 @@ public class ExamThree {
 		System.out.println("Q52.");
 
 		try (CustomResource resource = new CustomResource()) {
-			throw new SecurityException("sec excepitron ");
+			throw new SecurityException("Security Excepition ");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -763,8 +852,18 @@ public class ExamThree {
 
 	private static void Question54() {
 		System.out.println("Q54.");
+
+		// double mumber1=1000_ D;
+
 		float number = 0x1000_D;
+
 		System.out.println(number);
+
+		number = 0x1000D;
+
+		System.out.println(number);
+
+		LineUtil.printLines(5);
 
 	}
 
@@ -805,15 +904,20 @@ public class ExamThree {
 		System.out.println("Q59.");
 
 		Locale locale = new Locale("ja", "JP");
-		ResourceBundle bundle = ResourceBundle.getBundle("sample.StatsBundle", locale);
+		ResourceBundle bundle = ResourceBundle.getBundle("java8.ocp.whizzlabs.exam.three.StatsBundle", locale);
 		Object gdp = bundle.getObject("GDP");
 		System.out.println(gdp);
+		Object xy = bundle.getObject("XY");
+		System.out.println(xy);
 
 	}
 
 	private static void Question60() {
 		System.out.println("Q60.");
 
+		System.out.println(
+				"A Duration is not connected to the timeline, in that it does not track time zones or daylight saving time. \n"
+						+ "Adding a Duration equivalent to 1 day to a ZonedDateTime results in exactly 24 hours being added, regardless of daylight saving time or other time differences that might result.");
 
 	}
 

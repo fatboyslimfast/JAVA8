@@ -3,19 +3,33 @@
  */
 package java8.ocp.whizzlabs.exam.four;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.WatchService;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -26,11 +40,16 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import java8.ocp.whizzlabs.exam.Data;
+import java8.ocp.whizzlabs.exam.Movie;
 import java8.ocp.whizzlabs.exam.Student;
 import java8.ocp.whizzlabs.exam.Student.Faculty;
 
@@ -122,9 +141,10 @@ public class ExamFour {
 		System.out.println("Q1 ...");
 
 		List<Integer> listIntegers = new ArrayList<>();
-		List<Number> listNumbers = new ArrayList<>();
-
 		List<? super Integer> numbers = process(listIntegers);
+
+		List<Number> listNumbers = new ArrayList<>();
+		List<? extends Number> numbers2 = process(listNumbers);
 
 	}
 
@@ -143,6 +163,9 @@ public class ExamFour {
 		Comparator<Student> comparator = tempComp.thenComparing(Student::getId);
 
 		System.out.println(students.stream().sorted(comparator).allMatch(s -> s != null));
+
+		// students.stream().sorted(comparator).forEach(s ->
+		// System.out.println(s.getName()));
 
 		for (Student student : students) {
 			System.out.println("post sort : " + student);
@@ -257,6 +280,7 @@ public class ExamFour {
 
 		Map<Faculty, List<String>> output = students.stream().collect(
 				Collectors.groupingBy(Student::getFaculty, Collectors.mapping(Student::getName, Collectors.toList())));
+
 		System.out.println(output);
 
 	}
@@ -271,7 +295,7 @@ public class ExamFour {
 
 	}
 
-	private static void Question13() {
+	private static void Question13() throws IOException {
 		System.out.println("Q13 ...");
 		AtomicInteger counter = new AtomicInteger(0);
 		List<String> sentence = Arrays.asList("he", "wants", "to", "see", "the", "sea");
@@ -282,6 +306,8 @@ public class ExamFour {
 		});
 
 		System.out.println("Counter : " + counter);
+
+		Files.newDirectoryStream(Paths.get("."), "glob:*.txt");
 
 	}
 
@@ -348,70 +374,139 @@ public class ExamFour {
 	}
 
 	private static void Question20() {
-		// System.out.println("QXX ...");
+		System.out.println("Q20 ...");
+		System.out.println(
+				"To walk a file tree, you first need to implement a FileVisitor. A FileVisitor specifies the required behavior at key points in the traversal process: when a file is visited, before a directory is accessed, after a directory is accessed, or when a failure occurs. The interface has four methods that correspond to these situations: \n"
+						+ "preVisitDirectory – Invoked before a directory's entries are visited.\n"
+						+ "postVisitDirectory – Invoked after all the entries in a directory are visited. If any errors are encountered, the specific exception is passed to the method.\n"
+						+ "visitFile – Invoked on the file being visited. The file's BasicFileAttributes is passed to the method, or you can use the file attributes package to read a specific set of attributes. For example, you can choose to read the file's DosFileAttributeView to determine if the file has the 'hidden' bit set.\n"
+						+ "visitFileFailed – Invoked when the file cannot be accessed. The specific exception is passed to the method. You can choose whether to throw the exception, print it to the console or a log file, and so on.");
 
 	}
 
 	public static void Question21() throws Exception {
+		System.out.println("Q21 ...");
+		Path source = Paths.get("C:\\Users\\Pete\\exam\\file.txt");
+		Files.copy(source, source.resolveSibling("file2.txt"), StandardCopyOption.REPLACE_EXISTING);
 
 	}
 
 	private static void Question22() {
-		// System.out.println("QXX ...");
+		System.out.println("Q22 ...");
+		Path path = Paths.get("C:\\Users\\Pete\\exam\\file.txt");
+		try (BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.DSYNC)) {
+			bf.write("I am sitting here ...");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	private static void Question23() {
-		// System.out.println("QXX ...");
+		System.out.println("Q23 ...");
+		Path path = Paths.get("\\Users\\Pete\\exam\\file.txt");
+		System.out.println(path.subpath(0, 2));
+		System.out.println("file.txt ends with txt = " + path.endsWith("txt"));
 
 	}
 
-	private static void Question24() {
-		// System.out.println("QXX ...");
+	private static void Question24() throws IOException {
+		System.out.println("Q24 ...");
+		Path path = Paths.get("C:\\Users\\Pete\\exam\\");
+		Files.find(path, Integer.MAX_VALUE, (p, a) -> p.toString().endsWith("txt")).forEach(System.out::println);
 
 	}
 
-	private static void Question25() {
-		// System.out.println("QXX ...");
+	private static void Question25() throws IOException {
+		System.out.println("Q25 ...");
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("C:\\Users\\Pete\\exam\\"),
+				"glob-*.txt")) {
+			stream.forEach(System.out::println);
+		}
 
 	}
 
-	private static void Question26() {
-		// System.out.println("QXX ...");
+	private static void Question26() throws IOException {
+		System.out.println("Q26 ...");
+		try (Stream<String> lines = Files.lines(Paths.get("\\Users\\Pete\\exam\\file.txt"));
+				BufferedWriter bw = Files.newBufferedWriter(Paths.get("\\Users\\Pete\\exam\\file_new.txt"))) {
+			// lines.forEach(bw::write);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	private static void Question27() {
-		// System.out.println("QXX ...");
+		System.out.println("Q27 ...");
+		// System.out.println(StandardOpenOption.NSYNC);
 
 	}
 
 	private static void Question28() {
-		// System.out.println("QXX ...");
+		System.out.println("Q28 ...");
+		Path path1 = Paths.get("//users/./project//..//..//src//main//resources//config.xml");
+		Path path2 = path1.relativize(path1.normalize());
+		System.out.println(path1.getNameCount() + " " + path2.getNameCount());
 
 	}
 
 	private static void Question29() {
-		// System.out.println("QXX ...");
+		System.out.println("Q29...");
+		Stream<String> stream = Stream.of("java", "se", "8");
+		String output = stream.collect(Collectors.joining(" ", "", "")).toUpperCase();
+		System.out.println(output);
 
 	}
 
 	private static void Question30() {
-		// System.out.println("QXX ...");
+		System.out.println("Q30 ...");
+		List<Integer> list1 = Arrays.asList(1, 2, 3);
+		List<Integer> list2 = Arrays.asList(2, 4, 6);
+		List<Integer> list3 = Arrays.asList(3, 6, 9);
+
+		List<List<Integer>> lists = Arrays.asList(list1, list2, list3);
+
+		lists.stream().flatMap(l -> l.stream()).distinct().peek(System.out::print).noneMatch(l -> l < 0);
+
+	}
+
+	public static class StudentFactory {
+
+		public static Student geStudent(String string) {
+			return null;
+		}
 
 	}
 
 	public static void Question31() throws Exception {
+		System.out.println("Q31 ...");
+
+		Optional<Student> optional = Optional.ofNullable(StudentFactory.geStudent("Student"));
+		System.out.println(optional.orElse(new Student("peter")));
+		System.out.println(optional.orElseGet(() -> new Student("peter piper")));
 
 	}
 
 	private static void Question32() {
-		// System.out.println("QXX ...");
+		System.out.println("Q32 ...");
+
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+
+		int sum = numbers.stream().mapToInt(x -> x).sum();
+
+		System.out.println(sum);
+
+		List<Integer> numbers2 = Arrays.asList(1, 2, 3, 4);
+
+		int sum2 = numbers2.stream().collect(Collectors.summingInt(i -> i));
+
+		System.out.println(sum2);
 
 	}
 
 	private static void Question33() {
-		// System.out.println("QXX ...");
+		System.out.println("Q33 ...");
 
 	}
 
@@ -421,12 +516,38 @@ public class ExamFour {
 	}
 
 	private static void Question35() {
-		// System.out.println("QXX ...");
+		System.out.println("Q35 ...");
+
+		Movie movie1 = new Movie(9.5, "Casino Royale");
+		Movie movie2 = new Movie(6.5, "Quantum of Solace");
+		Movie movie3 = new Movie(9.3, "Skyfall");
+		Movie movie4 = new Movie(6.5, "Spectre");
+
+		List<Movie> movies = Arrays.asList(movie1, movie2, movie3, movie4);
+		List<Movie> movies2 = Arrays.asList(movie1, movie2, movie3, movie4);
+		List<Movie> movies3 = Arrays.asList(movie1, movie2, movie3, movie4);
+
+		movies.stream().filter(f -> f.getRating() > 9.0).forEach(f -> System.out.println(f.getTitle()));
+
+		movies2.stream().filter(new Movie.Filter()).forEach(f -> System.out.println(f.getTitle()));
+
+		// movies3.stream().filter(Movie::Filter::isGood).forEach(f ->
+		// System.out.println(f.getTitle()));
 
 	}
 
 	private static void Question36() {
-		// System.out.println("QXX ...");
+		System.out.println("Q36 ...");
+		Student student1 = new Student(1, "John");
+		Student student2 = new Student(2, "Ringo");
+		Student student3 = new Student(3, "George");
+		Student student4 = new Student(4, "Jack");
+
+		Stream<Student> stream = Stream.of(student1, student2, student3, student4);
+
+		ToIntFunction<Student> func = s -> s.getId();
+		stream.mapToInt(func);
+		// stream.forEach(s -> System.out.println(s));
 
 	}
 
@@ -436,12 +557,42 @@ public class ExamFour {
 	}
 
 	private static void Question38() {
-		// System.out.println("QXX ...");
+		System.out.println("Q38 ...");
+		System.out.println("public interface BiConsumer<T,U> \n"
+				+ "Represents an operation that accepts two input arguments and returns no result. \n "
+				+ "This is the two-arity specialization of Consumer. \n"
+				+ "Unlike most other functional interfaces, BiConsumer is expected to operate via side-effects\n");
+		System.out.println("public interface BiFunction<T,U,R> \n"
+				+ "Represents a function that accepts two arguments and produces a result. This is the two-arity specialization of Function.\n"
+				+ "This is a functional interface whose functional method is apply(Object, Object).\n");
+		System.out.println("public interface BinaryOperator<T>\n" + "extends BiFunction<T,T,T>\n"
+				+ "Represents an operation upon two operands of the same type, producing a result of the same type as the operands. \n This is a specialization of BiFunction for the case where the operands and the result are all of the same type.\n");
+
+		System.out.println("public interface BiPredicate<T,U>\n"
+				+ "Represents a predicate (boolean-valued function) of two arguments. This is the two-arity specialization of Predicate.\n"
+				+ "This is a functional interface whose functional method is test(Object, Object).\n");
+
+		System.out.println("public interface Supplier<T>\n" + "Represents a supplier of results.\n"
+				+ "There is no requirement that a new or distinct result be returned each time the supplier is invoked.\n"
+				+ "This is a functional interface whose functional method is get().");
 
 	}
 
 	private static void Question39() {
-		// System.out.println("QXX ...");
+		System.out.println("Q39 ...");
+
+		Student student1 = new Student(1, "John");
+		Student student2 = new Student(2, "Ringo");
+		Student student3 = new Student(3, "George");
+		Student student4 = new Student(4, "Jack");
+
+		Map<Integer, String> map = new HashMap<>();
+		map.put(student1.getId(), student1.getName());
+		map.put(student2.getId(), student2.getName());
+		map.put(student3.getId(), student3.getName());
+		map.put(student4.getId(), student4.getName());
+
+		map.forEach((k, v) -> System.out.println(k + ":" + v));
 
 	}
 
@@ -460,28 +611,76 @@ public class ExamFour {
 	}
 
 	private static void Question43() {
-		// System.out.println("QXX ...");
+		System.out.println("Q43...");
+		Stream<String> s = Stream.of("united", "states");
+		BinaryOperator<String> operator = (s1, s2) -> s1.concat(s2.toUpperCase());
+		String result = s.reduce("-", operator);
+		System.out.println(result);
 
 	}
 
 	private static void Question44() {
-		// System.out.println("QXX ...");
+		System.out.println("Q44 ...");
+		Supplier<Student> supplier = () -> new Student();
+		// Function<int, String> function = (i) -> new Student(i, n).;
+
+		// Predicate<Student> predicate = s -> s.getId();
+
+		Consumer<Student> consumer = s -> System.out.println(s);
 
 	}
 
 	private static void Question45() {
-		// System.out.println("QXX ...");
+		System.out.println("Q45 ...");
+		Child func = () -> {
+			return 0;
+		};
 
 	}
 
 	private static void Question46() {
-		// System.out.println("QXX ...");
+		System.out.println("Q46 ...");
+
+		BinaryOperator<String> func = String::concat;
+
+		Map<Integer, String> map = new HashMap<>();
+		map.put(1, "a");
+		map.put(2, "b");
+
+		map.merge(1, "A", func);
+		map.merge(2, "B", func);
+
+		System.out.println(map);
 
 	}
 
 	private static void Question47() {
-		// System.out.println("QXX ...");
+		System.out.println("Q47");
 
+		try {
+			// do something
+			method2();
+		} catch (Exception e) {
+			Throwable[] throwables = e.getSuppressed();
+			for (Throwable throwable : throwables) {
+				System.out.println("suppressed " + throwable);
+			}
+		}
+
+	}
+
+	private static void method2() throws Exception {
+		try {
+			method1();
+		} catch (Exception ex) {
+			throw new Exception(ex);
+		} finally {
+			throw new IOException();
+		}
+	}
+
+	private static void method1() {
+		throw new RuntimeException();
 	}
 
 	private static void Question48() {
@@ -490,12 +689,44 @@ public class ExamFour {
 	}
 
 	private static void Question49() {
-		// System.out.println("QXX ...");
+		System.out.println("Q49 ...");
+
+		String string1 = "java";
+		String string2 = "se";
+		String string3 = "upgrade";
+
+		Object[] strings = new String[] { string1, string2, string3 };
+
+		for (Object string : strings) {
+			switch (string.toString()) {
+			case "java":
+				System.out.println("JAVA");
+			case "se":
+				System.out.println("SE");
+			case "upgrade":
+				System.out.println("UPGRADE");
+
+			}
+		}
 
 	}
 
-	private static void Question50() {
-		// System.out.println("QXX ...");
+	private static void Question50(String... strings) {
+		System.out.println("Q50 ...");
+
+		final Object val1 = "0";
+		final String val2 = "0";
+		final Character val3 = '0';
+		final Integer val4 = 0;
+
+		for (String string : strings) {
+
+			switch (string) {
+			case val2:
+				System.out.println("do stuff .... \n");
+			}
+
+		}
 
 	}
 
@@ -504,7 +735,19 @@ public class ExamFour {
 	}
 
 	private static void Question52() {
-		// System.out.println("QXX ...");
+		System.out.println("Q52 ...");
+
+		char value = 0b1;
+		System.out.println("0b1 : " + value);
+
+		long value1 = 0xb_1;
+		System.out.println("long 0xb_1 : " + value1);
+
+		double value2 = 0x1_f;
+		System.out.println("double 0x1_f : " + value2);
+
+		long value4 = 0B1;
+		System.out.println("long 0B1 : " + value4);
 
 	}
 
@@ -519,17 +762,42 @@ public class ExamFour {
 	}
 
 	private static void Question55() {
-		// System.out.println("QXX ...");
+		System.out.println("Q55 ...");
+		try (BufferedReader reader = new BufferedReader(new FileReader("file1.txt"))) {
+
+			// reader = new BufferedReader(new FileReader("file2.txt"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	private static void Question56() {
-		// System.out.println("QXX ...");
+	private static void Question56() throws ParseException {
+		System.out.println("Q56 ...");
+
+		double frNumber = 1234.5;
+
+		NumberFormat frFormatter = NumberFormat.getInstance(Locale.FRANCE);
+
+		NumberFormat ukFormatter = NumberFormat.getInstance(Locale.UK);
+
+		String formattedNum = frFormatter.format(frNumber);
+
+		System.out.println(formattedNum);
+
+		Number ukNumber = ukFormatter.parse(formattedNum);
+
+		System.out.println(ukNumber);
 
 	}
 
 	private static void Question57() {
-		// System.out.println("QXX ...");
+		System.out.println("Q57 ...");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("ZZZ");
+
+		System.out.println(sdf.format(new Date()));
 
 	}
 
@@ -539,12 +807,26 @@ public class ExamFour {
 	}
 
 	private static void Question59() {
-		// System.out.println("QXX ...");
+		System.out.println("Q59 ...");
+
+		LocalDateTime dateTime = LocalDateTime.parse("2018-06-30T23:59:59");
+
+		String output = dateTime.format(DateTimeFormatter.ISO_DATE_TIME);
+
+		System.out.println(output);
 
 	}
 
 	private static void Question60() {
-		// System.out.println("QXX ...");
+		System.out.println("Q60 ...");
+
+		Instant instant = Instant.now();
+
+		System.out.println(instant);
+
+		instant.truncatedTo(ChronoUnit.SECONDS);
+
+		System.out.println(instant);
 
 	}
 

@@ -6,7 +6,7 @@ public class CustomResource implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		throw new IOException("IO Exceprion");
+		throw new IOException("IO Exception");
 
 	}
 

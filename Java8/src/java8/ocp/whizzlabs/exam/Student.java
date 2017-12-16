@@ -16,6 +16,23 @@ public class Student {
 	private Faculty faculty;
 	private double mark;
 
+	public Student() {
+		this(0, "noname");
+	}
+
+	public Student(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @param id
+	 * @param name
+	 */
+	public Student(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public Student(String name, Faculty faculty) {
 		this.name = name;
 		this.faculty = faculty;
@@ -31,15 +48,6 @@ public class Student {
 		this.name = name;
 		this.department = department;
 		this.gender = gender;
-	}
-
-	/**
-	 * @param id
-	 * @param name
-	 */
-	public Student(int id, String name) {
-		this.id = id;
-		this.name = name;
 	}
 
 	public String getName() {
@@ -92,11 +100,11 @@ public class Student {
 		return name;
 	}
 
-	enum Department {
+	public enum Department {
 		BUSINESS, TECHNICAL
 	}
 
-	enum Gender {
+	public enum Gender {
 		MALE, FEMALE
 	}
 

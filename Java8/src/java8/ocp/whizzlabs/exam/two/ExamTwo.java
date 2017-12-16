@@ -7,8 +7,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -38,6 +40,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import java8.ocp.whizzlabs.exam.one.LineUtil;
 
 /**
  * @author Pete
@@ -226,8 +230,11 @@ public class ExamTwo {
 
 	}
 
-	private static void Question13() {
+	private static void Question13() throws IOException {
+		Path target;
+		Path source;
 		// TODO Auto-generated method stub
+		Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
 
 	}
 
@@ -366,11 +373,22 @@ public class ExamTwo {
 	}
 
 	private static void Question29() {
+		LineUtil.printLines(3);
+		System.out.println("Q29");
+
 		List<String> strings = Arrays.asList("a", "b", "c", "d");
-		List<String> strings2 = Arrays.asList("a", "b", "c", "d");
 		List<Integer> integers = Arrays.asList(1, 2, 3, 4);
 
-		Stream.of(strings, integers).flatMap(e -> Stream.of(e)).forEach(System.out::println);
+		System.out.println("Stream.of(strings, integers).flatMap(e -> Stream.of(e)).forEach(System.out::print)");
+
+		Stream.of(strings, integers).flatMap(e -> Stream.of(e)).forEach(System.out::print);
+
+		LineUtil.printLines(2);
+
+		System.out.println("Stream.of(strings, integers).flatMap(e -> e.stream()).forEach(System.out::print)");
+
+		Stream.of(strings, integers).flatMap(e -> e.stream()).forEach(System.out::print);
+		LineUtil.printLines(3);
 
 	}
 
@@ -378,15 +396,19 @@ public class ExamTwo {
 		List<Integer> integers = Arrays.asList(1, 3, 5);
 		Optional<Integer> optional = Optional.of(integers.stream().filter(i -> i % 2 == 0).reduce((i, j) -> i + j));
 		System.out.println(optional.get());
+		LineUtil.printLines(3);
 
 	}
 
 	public static void Question31() throws Exception {
 
+		System.out.println("Q31");
+
 		List<Movie> movies = Arrays.asList(new Movie("The Godfather", 9.5), new Movie("The Transporter", 8.5));
 
 		movies.stream().peek(System.out::println).filter(m -> m.getRating() > 9.0)
 				.forEach(m -> System.out.println(m.getTitle()));
+		LineUtil.printLines(3);
 
 	}
 
@@ -405,6 +427,7 @@ public class ExamTwo {
 
 		// titles = books.stream().map(Book::getTitle).forEach(x ->
 		// titles.add(x));
+		LineUtil.printLines(3);
 
 	}
 
@@ -424,6 +447,7 @@ public class ExamTwo {
 		// list.stream().filter(positive).forEach(System.out::println);
 
 		list.stream().filter(positive).allMatch(negative);
+		LineUtil.printLines(3);
 
 	}
 
@@ -455,6 +479,7 @@ public class ExamTwo {
 
 		int max4 = list.stream().max(Comparator.comparingInt(a -> a)).get();
 		System.out.println(max4);
+		LineUtil.printLines(3);
 	}
 
 	private static void Question38() {
@@ -486,6 +511,7 @@ public class ExamTwo {
 	}
 
 	private static void Question40() {
+		LineUtil.printLines(5);
 		System.out.println("Q40");
 
 		List<Integer> list = Arrays.asList(1, 2, 3, 4);
@@ -547,7 +573,7 @@ public class ExamTwo {
 
 	}
 
-	private static void Question45() {
+	private static void Question45() throws Exception {
 		System.out.println("Q45");
 
 		List<String> list = Arrays.asList(null, "null");
@@ -663,16 +689,19 @@ public class ExamTwo {
 	}
 
 	private static void Question57() {
+
+		LineUtil.printLines(3);
+
 		// DateFormat df = new DateFormat(Locale.US);
-		// Cannot instantiate the type DateFormat
+		System.out.println("Cannot instantiate the type DateFormat");
 
 		// DateFormat df2 = DateFormat.getDateInstance(Locale.US);
-		// d getDateInstance(int) in the type DateFormat is not applicable for
-		// the arguments (Locale)
+		System.out
+				.println("d getDateInstance(int) in the type DateFormat is not applicable for the arguments (Locale)");
 
 		// DateFormat df3 = DateFormat.getDateInstance();
 		// df3.setLocale(Locale.US);
-		// The method setLocale(Locale) is undefined for the type DateFormat
+		System.out.println("The method setLocale(Locale) is undefined for the type DateFormat");
 	}
 
 	private static void Question58() {
